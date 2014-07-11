@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '2.3.18'
+gem 'rails', '3.2.19'
 gem 'mysql', '~> 2.8.1'
 gem 'passenger', '3.0.5'
 
@@ -9,7 +9,6 @@ gem 'bitly', '~> 0.5.3'
 gem 'cancan', '~> 1.4.0'
 gem 'compass', '~> 0.10.5'
 gem 'couchrest', '~> 0.37'
-gem 'erubis', '~> 2.6.6'
 gem 'gravtastic', '~> 2.2.0'
 gem 'haml', '~> 3.0.22'
 gem 'hoptoad_notifier', '~> 2.4'
@@ -17,7 +16,6 @@ gem 'maruku', '~> 0.6.0'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~> 1.4.4'
 gem 'oauth', '~> 0.4.4'
-gem 'rdoc', '~> 2.4.2'
 gem 'recaptcha', '~> 0.2.3', :require => 'recaptcha/rails'
 gem 'rollbar'
 gem 'rpx_now', '~> 0.6.23'
@@ -34,7 +32,6 @@ end
 group :development do
   gem 'annotate'
   gem 'query_diet'
-  gem 'ruby-debug'
   gem 'wirble'
 end
 
