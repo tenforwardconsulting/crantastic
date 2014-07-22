@@ -1,4 +1,7 @@
 Crantastic::Application.routes.draw do
+
+  root :to => 'timeline_events#index'
+
   resources :author_identities, :only => [ :new, :create ]
 
   resources :authors, :only => [ :index, :show, :create, :edit, :update ]
@@ -44,8 +47,6 @@ Crantastic::Application.routes.draw do
   # Singleton resources
   resource :search, :controller => "search", :only => [ :show ]
   resource :session, :collection => { :rpx_token => :get }, :only => [ :new, :create, :destroy ]
-
-  root :to => 'timeline_events#index'
 
   match 'about' => "about", :to => 'static#about'
   match 'email_notifications', :to => 'static#email_notifications'

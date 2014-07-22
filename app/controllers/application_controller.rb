@@ -1,8 +1,4 @@
 class ApplicationController < ActionController::Base
-  # replaces the value to all keys matching /password/i with "[FILTERED]"
-  filter_parameter_logging :password
-
-  # TODO Remove this?
   helper :all # include all helpers, all the time
 
   include AuthenticatedSystem

@@ -1,1 +1,1 @@
-Haml::Template.options[:ugly] = ENV['RAILS_ENV'] == 'production'
+Haml::Template.options[:ugly] = Rails.env == 'production'

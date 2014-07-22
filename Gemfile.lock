@@ -69,9 +69,6 @@ GEM
     hike (1.2.3)
     hoe (3.12.0)
       rake (>= 0.8, < 11.0)
-    hoptoad_notifier (2.4.11)
-      activesupport
-      builder
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -219,7 +216,6 @@ DEPENDENCIES
   faker (~> 0.3.1)
   gravtastic (~> 2.2.0)
   haml
-  hoptoad_notifier (~> 2.4)
   jquery-rails
   machinist (~> 1.0.6)
   markup_validity (~> 1.1.0)
