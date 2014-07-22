@@ -25,22 +25,20 @@ Crantastic::Application.routes.draw do
   # The following rule allows us to capture links such as /packages/data.table,
   # before redirecting them to the correct URL. Note the negative lookahead for
   # valid formats, so that we don't break e.g. .xml urls.
-  map.connect '/packages/:id', :controller => 'packages',
-    :action => 'show',
-    :requirements => { :id => /.+\.(?!xml|atom|html|bibjs).*/ }
+  match '/packages/:id', :controller => 'packages', :action => 'show', :requirements => { :id => /.+\.(?!xml|atom|html|bibjs).*/ }, :via => [:get, :post]
 
   resources :packages,
             :collection => { :all => :get, :feed => :get, :search => [ :get, :post ] },
             :member => { :toggle_usage => :post },
-            :except => [ :update, :edit ] do |p|
-    p.resources :versions, :only => [ :index, :show ]
-    p.resources :ratings, :except => [ :edit, :update ]
-    p.resources :reviews
-    p.resources :taggings, :only => [ :new, :create, :destroy ]
+            :except => [ :update, :edit ] do
+    resources :versions, :only => [ :index, :show ]
+    resources :ratings, :except => [ :edit, :update ]
+    resources :reviews
+    resources :taggings, :only => [ :new, :create, :destroy ]
   end
 
-  resources :reviews do |r|
-    r.resources :review_comments, :only => [ :new, :create, :show ]
+  resources :reviews do
+    resources :review_comments, :only => [ :new, :create, :show ]
   end
 
   # Singleton resources
@@ -49,23 +47,21 @@ Crantastic::Application.routes.draw do
 
   root :controller => "timeline_events", :action => "index"
 
-  map.with_options :controller => "static" do |static|
-    static.about "about", :action => "about"
-    static.email_notifications "email_notifications", :action => "email_notifications"
-    static.error_404 "error_404", :action => "error_404"
-    static.error_500 "error_500", :action => "error_500"
-  end
+  match 'about' => "about", :action => "about", :controller => 'static'
+  match 'email_notifications' => "email_notifications", :action => "email_notifications", :controller => 'static'
+  match 'error_404' => "error_404", :action => "error_404", :controller => 'static'
+  match 'error_500' => "error_500", :action => "error_500", :controller => 'static'
 
   # Named routes
-  match 'daily' => '/daily/:day', :controller => 'weekly_digests', :action => 'daily'
-  match 'signup' => '/signup', :controller => 'users', :action => 'new'
-  match 'thanks' => '/thanks', :controller => 'users', :action => 'thanks'
-  match 'activate' => '/activate/:activation_code', :controller => 'users', :action => 'activate'
-  match 'login' => '/login', :controller => 'sessions', :action => 'new'
-  match 'logout' => '/logout', :controller => 'sessions', :action => 'destroy'
-  match 'popcon' => '/popcon', :controller => 'packages', :action => 'index', :popcon => '1'
+  match 'daily/:day', :controller => 'weekly_digests', :action => 'daily'
+  match 'signup', :controller => 'users', :action => 'new'
+  match 'thanks', :controller => 'users', :action => 'thanks'
+  match 'activate/:activation_code', :controller => 'users', :action => 'activate'
+  match 'login', :controller => 'sessions', :action => 'new'
+  match 'logout', :controller => 'sessions', :action => 'destroy'
+  match 'popcon', :controller => 'packages', :action => 'index', :popcon => '1'
 
-  match 'version_extras' => '/versions/:id/:action', :controller => 'versions'
+  #match 'version_extras' => 'versions/:id/:action', :controller => 'versions'
 
-  match 'error' => '*url', :controller => 'static', :action => 'error_404'
+  #match 'error' => '*url', :controller => 'static', :action => 'error_404'
 end
