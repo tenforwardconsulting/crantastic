@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.19'
-gem 'mysql', '~> 2.8.1'
-gem 'passenger', '3.0.5'
 
 gem 'authlogic', '~> 2.1.6'
 gem 'bitly', '~> 0.5.3'
@@ -12,10 +10,13 @@ gem 'couchrest', '~> 0.37'
 gem 'gravtastic', '~> 2.2.0'
 gem 'haml', '~> 3.0.22'
 gem 'hoptoad_notifier', '~> 2.4'
+gem 'jquery-rails'
 gem 'maruku', '~> 0.6.0'
+gem 'mysql', '~> 2.8.1'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~> 1.4.4'
 gem 'oauth', '~> 0.4.4'
+gem 'passenger', '3.0.5'
 gem 'recaptcha', '~> 0.2.3', :require => 'recaptcha/rails'
 gem 'rollbar'
 gem 'rpx_now', '~> 0.6.23'
@@ -42,3 +43,10 @@ group :test do
   gem 'remarkable_rails', '~> 3.1.13'
   gem 'webrat', '~> 0.7.2'
 end
+
+group :assets do
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'uglifier', '>= 1.0.3'
+end
+
