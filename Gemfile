@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.19'
 
-gem 'authlogic', '~> 2.1.6'
+gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
 gem 'cancan', '~> 1.4.0'
 gem 'compass', '~> 0.10.5'
 gem 'couchrest', '~> 0.37'
 gem 'gravtastic', '~> 2.2.0'
-gem 'haml', '~> 3.0.22'
+gem 'haml'
 gem 'hoptoad_notifier', '~> 2.4'
 gem 'jquery-rails'
 gem 'maruku', '~> 0.6.0'
@@ -22,12 +22,13 @@ gem 'rollbar'
 gem 'rpx_now', '~> 0.6.23'
 gem 'timeline_fu', '~> 0.3.0'
 gem 'treetop-dcf', '~> 0.2.1'
-gem 'will_paginate', '~> 2.3.15'
+gem 'will_paginate'
 gem 'yajl-ruby', '~> 0.7.8', :require => 'yajl'
 
 group :development, :test do
   gem 'rspec-rails', '~> 1.3.4'
   gem 'pry', '~> 0.9.12.6'
+  gem 'test-unit'
 end
 
 group :development do

@@ -15,8 +15,8 @@
 class Tag < ActiveRecord::Base
   # NOTE: Causes problems for PostgreSQL 8.3. Uncommented until fixed in Rails.
   # default_scope :order => "LOWER(name) ASC"
-  named_scope :ordered, :order => "LOWER(name) ASC"
-  named_scope :regular, :conditions => "type IS NULL"
+  scope :ordered, :order => "LOWER(name) ASC"
+  scope :regular, :conditions => "type IS NULL"
 
   # Taggings should be destroyed together with the tag
   has_many :taggings, :dependent => :destroy

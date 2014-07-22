@@ -16,10 +16,10 @@ class PackageUser < ActiveRecord::Base
   belongs_to :package
   belongs_to :user
 
-  named_scope :active,       :conditions => { :active => true }
-  named_scope :for_user,     lambda { |u| {:conditions => { :user_id => u.id }} }
-  named_scope :recent,       lambda { |*args| {:conditions => ["created_at > ?", (args.first || 2.weeks.ago).to_s(:db)]} }
-  named_scope :descending,   :order => "created_at DESC"
+  scope :active,       :conditions => { :active => true }
+  scope :for_user,     lambda { |u| {:conditions => { :user_id => u.id }} }
+  scope :recent,       lambda { |*args| {:conditions => ["created_at > ?", (args.first || 2.weeks.ago).to_s(:db)]} }
+  scope :descending,   :order => "created_at DESC"
 
   fires :new_package_user, :on => :create,
                            :actor => :user,

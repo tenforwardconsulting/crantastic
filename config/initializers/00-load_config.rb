@@ -1,10 +1,10 @@
 # Load global app configuration
-APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/settings.yml")[Rails.env].symbolize_keys
+APP_CONFIG = YAML.load_file("#{Rails.root}/config/settings.yml")[Rails.env].symbolize_keys
 
 # Load private configuration (API keys etc)
 # If private.yml isn't available, we're falling back to using ENV variables
-private_config = if File.exists?("#{RAILS_ROOT}/config/private.yml")
-                   YAML.load_file("#{RAILS_ROOT}/config/private.yml")
+private_config = if File.exists?("#{Rails.root}/config/private.yml")
+                   YAML.load_file("#{Rails.root}/config/private.yml")
                  end
 
 unless private_config.nil?

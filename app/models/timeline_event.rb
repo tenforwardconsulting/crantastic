@@ -20,13 +20,13 @@
 class TimelineEvent < ActiveRecord::Base
 
   default_scope :order => "timeline_event.created_at DESC"
-  named_scope :recent, :limit => 25, :include => [:actor, :subject, :secondary_subject]
-  named_scope :recent_for_user, lambda { |u| {
+  scope :recent, :limit => 25, :include => [:actor, :subject, :secondary_subject]
+  scope :recent_for_user, lambda { |u| {
       :limit => 10, :conditions => { :actor_id => u.id },
       :include => [:actor, :subject, :secondary_subject] }
   }
   # Takes a list of package ids as argument.
-  named_scope :recent_for_package_ids, lambda { |package_ids| {
+  scope :recent_for_package_ids, lambda { |package_ids| {
       :limit => 25,
       :conditions => ["secondary_subject_id IN (?)", package_ids],
       :include => [:actor, :subject, :secondary_subject] }

@@ -1,4 +1,5 @@
-Crantastic::Application.routes.draw do
+ActionController::Routing::Routes.draw do |map|
+
   map.resources :author_identities, :only => [ :new, :create ]
   map.resources :authors, :only => [ :index, :show, :create, :edit, :update ]
   map.resources :password_resets, :except => [ :index, :destroy, :show ]
@@ -62,4 +63,5 @@ Crantastic::Application.routes.draw do
   map.version_extras '/versions/:id/:action', :controller => 'versions'
 
   map.error '*url', :controller => 'static', :action => 'error_404'
+
 end

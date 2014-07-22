@@ -58,12 +58,12 @@ class Package < ActiveRecord::Base
                       :subject           => :self,
                       :secondary_subject => :self # yes 2x package
 
-  named_scope :recent, :order => "#{self.table_name}.created_at DESC",
+  scope :recent, :order => "#{self.table_name}.created_at DESC",
                        :include => :latest_version,
                        :conditions => "#{self.table_name}.created_at IS NOT NULL",
                        :limit => 50
 
-  named_scope :most_popular, :order => "score DESC, package_users_count DESC",
+  scope :most_popular, :order => "score DESC, package_users_count DESC",
                              :include => :latest_version,
                              :limit => 5
 

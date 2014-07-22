@@ -27,7 +27,7 @@ class Review < ActiveRecord::Base
                      :secondary_subject => :package
 
   default_scope :order => "created_at DESC" # Latest first
-  named_scope :recent, :limit => 10, :include => [:user, :package]
+  scope :recent, :limit => 10, :include => [:user, :package]
 
   before_validation :strip_title_and_review # NOTE: consider before_save
   before_create :cache_rating
