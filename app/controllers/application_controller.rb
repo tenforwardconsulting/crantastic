@@ -15,10 +15,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def rescue_404
-    rescue_action_in_public ActionController::UnknownAction.new
+    render :template => 'static/error_404', status: 404
   end
 
   # Custom error processing after Hoptoad has been notified
+  # TODO Delete this? Not called anywhere
   def rescue_action_in_public_without_hoptoad(exception)
     case exception
     when ::ActionController::UnknownAction, ::ActiveRecord::RecordNotFound then
@@ -30,6 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Force local request to make sure rescue_action_in_public is triggered
+  # TODO Does this do anything
   def local_request?
     false
   end
@@ -51,7 +53,7 @@ class ApplicationController < ActionController::Base
                                  })
   end
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_404
+  rescue_from ActiveRecord::RecordNotFound, with: :rescue_404
 
   rescue_from CanCan::AccessDenied do |e|
     render :text => e.message, :status => :forbidden

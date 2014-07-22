@@ -28,12 +28,18 @@ Crantastic::Application.routes.draw do
   # The following rule allows us to capture links such as /packages/data.table,
   # before redirecting them to the correct URL. Note the negative lookahead for
   # valid formats, so that we don't break e.g. .xml urls.
-  match 'packages/:id', :to => 'packages#show', :requirements => { :id => /.+\.(?!xml|atom|html|bibjs).*/ }
 
-  resources :packages,
-            :collection => { :all => :get, :feed => :get, :search => [ :get, :post ] },
-            :member => { :toggle_usage => :post },
-            :except => [ :update, :edit ] do
+  # TODO This can probably go in the resources somehow?
+  match 'packages/:id', :to => 'packages#show', :requirements => { :id => /.+\.(?!xml|atom|html|bibjs).*/ }
+  resources :packages, :except => [:update, :edit] do
+    collection do
+      get :all
+      get :feed
+      match :search, via: [:get, :post]
+    end
+    member do
+      post :toggle_usage
+    end
     resources :versions, :only => [ :index, :show ]
     resources :ratings, :except => [ :edit, :update ]
     resources :reviews
@@ -48,7 +54,7 @@ Crantastic::Application.routes.draw do
   resource :search, :controller => "search", :only => [ :show ]
   resource :session, :collection => { :rpx_token => :get }, :only => [ :new, :create, :destroy ]
 
-  match 'about' => "about", :to => 'static#about'
+  match 'about', :to => 'static#about'
   match 'email_notifications', :to => 'static#email_notifications'
   match 'error_404', :to => 'static#error_404'
   match 'error_500', :to => 'static#error_500'
@@ -64,5 +70,6 @@ Crantastic::Application.routes.draw do
 
   match 'versions/:id/:action', :controller => 'versions', :as => 'version_extras'
 
-  #match 'error' => '*url', :controller => 'static', :action => 'error_404'
+  # TODO No idea what this is wanting to do
+  #map.error '*url', :controller => 'static', :action => 'error_404'
 end
