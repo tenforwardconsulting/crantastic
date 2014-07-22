@@ -1,0 +1,301 @@
+@import base
+
++blueprint-form
++blueprint-grid
++blueprint-typography
++blueprint-utilities
+
+body
+  font-size: 80%
+p
+  font-size: 102%
+
+p.right
+  text-align: right
+
+.float-l
+  +float("left")
+
+.float-r
+  +float("right")
+
+hr
+  +colruler
+
+hr.space
+  +colspacer
+
+.red
+  color: $red
+
+span.action
+  background-color: $green
+  font-weight: bold
+
+span.your-rating
+  color: #FD3933
+  font-style: italic
+
+h1, h2
+  a
+    +hover-link
+
+h1.title
+  background-color: $red
+  padding: 2.25em 0 0 5px
+  font-size: 4em
+  font-weight: bold
+  border-bottom: 3px solid $grey
+  margin-left: 0
+  margin-bottom: 10px
+
+  a
+    &:link, &:visited
+      color: $white
+    &:hover
+      text-decoration: none
+
+h1
+  color: $red
+  font-size: 3em
+  font-weight: normal
+  margin-bottom: 5px
+
+h2
+  margin-top: 1em
+  margin-bottom: 0em
+  font-size: 150%
+
+h3
+  font-size: 125%
+
+.homepage, .version
+  font-size: 30%
+
+.byline
+  font-size: 0.8em
+
+li span.version
+  font-size: 80%
+
+.box
+  background-color: $green
+  padding: 0.5em 0.5em 0.5em 0.4em
+  margin-bottom: 1em
+  a
+    +hover-link
+    &:link, &:visited
+      background-color: $white
+      padding: 4px
+      color: #333
+      font-weight: bold
+  ul
+    +horizontal-list
+    margin: 0.25em 0
+
+    li
+      line-height: 2.5em
+
+.button
+  margin-top: 8px
+  padding: 3px
+  text-align: center
+  background-color: $lightgreen
+  border: 1px solid $grey
+  -moz-border-radius: 0.5em
+  -webkit-border-radius: 0.5em
+
+  div input
+    background-color: transparent
+    border: 0
+
+#uses-button
+  height: 44px
+  float: right
+
+  span.users
+    border-bottom: 1px solid $grey
+    display: block
+
+p.rating
+  float: right
+  width: 1em
+  font-size: 5em
+  text-align: right
+
+#container
+  +container
+
+#main
+  +column(13)
+  margin-top: 10em
+
+#sidebar
+  +column(7, true)
+
+  #search-box
+    padding-left: 0.5em
+
+  #follow
+    text-align: right
+
+    ul
+      list-style: none
+      margin-right: 0
+
+#footer
+  +column(20)
+  padding-top: 10em
+
+  p
+    color: $quiet_color
+    border-top: 1px solid $grey
+    padding-top: 0.5em
+
+.flash
+  background-color: $green
+  padding: 0.5em
+  margin-bottom: 1em
+
+.error, input.error
+  border: 2px solid $grey
+  background-color: $lightpink
+  color: $darkred
+  border-color: $softpink
+
+label
+  font-weight: normal
+
+label.error
+  border: 0
+  background-color: transparent
+  padding: 0 0 0 4px
+  margin: 0 0 0 1em
+
+table.general
+  margin-top: 4px
+
+  tr
+    th
+      width: 100%
+      border-top: 1px solid $grey
+      border-bottom: 1px solid $grey
+      padding: 3px
+      padding-left: 8px
+
+    &.odd td
+      background-color: $white
+
+    &.even td
+      background-color: #eaeaea
+
+img#spinner
+  display: none
+  vertical-align: middle
+  margin: 0 0 0 5px
+
+small
+  font-size: 90%
+
+// Tags  ---------------------------------------------------------------------
+
+ul.tags
+  +horizontal-list
+  margin: 0.75em 0 0.25em 0
+
+  a
+    &:link, &:visited
+      background-color: $green
+      padding: 4px
+      color: $font_color
+      font-weight: bold
+      text-decoration: none
+
+    &.task_view
+      background-color: $red
+      color: $white
+      &:link, &:visited, &:hover
+        background-color: $red
+
+    &.priority
+      background-color: $blue
+      color: $white
+      &:link, &:visited, &:hover
+        background-color: $blue
+
+  .add
+    &:link, &:visited
+      background-color: $white
+      border: 1px solid $grey
+      display: block
+      line-height: 1.1em
+      height: 15px
+
+  li
+    padding: 0 0.49em 0 0
+    line-height: 2.5em
+
+span.tagMatches
+  margin-left: 10px
+
+span.tagMatches span
+  padding: 2px
+  margin-right: 4px
+  background-color: #0000AB
+  color: #fff
+  cursor: pointer
+
+ul.cloud
+  +horizontal-list
+
+  li
+    padding: 0 0.49em 0 0
+    line-height: 38px
+    vertical-align: bottom
+
+    &.xs
+      font-size: 10px
+    &.s
+      font-size: 14px
+    &.m
+      font-size: 18px
+    &.l
+      font-size: 22px
+    &.xl
+      font-size: 26px
+    &.xxl
+      font-size: 30px
+
+// Timeline Events
+
+ul.timeline
+  margin-top: 0
+  margin-bottom: 0
+  // Slightly more spacing between the elements
+  li
+    line-height: 21px
+
+// Comments
+
+ul.comments
+  list-style: none
+  li
+    padding: 4px
+    p
+      margin-bottom: 4px
+  li.author
+    border: 1px solid $red
+
+
+// Used for the search results
+ol
+  li
+    margin: 10px
+
+a#more
+  +clearfix
+  margin-top: 10px
+  width: 35px
+  text-align: center
+
+@import form

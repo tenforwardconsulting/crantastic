@@ -5,7 +5,7 @@ gem 'rails', '3.2.19'
 gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
 gem 'cancan', '~> 1.4.0'
-gem 'compass', '~> 0.10.5'
+gem 'compass-rails'
 gem 'couchrest', '~> 0.37'
 gem 'gravtastic', '~> 2.2.0'
 gem 'haml'
@@ -19,6 +19,7 @@ gem 'passenger', '3.0.5'
 gem 'recaptcha', '~> 0.2.3', :require => 'recaptcha/rails'
 gem 'rollbar'
 gem 'rpx_now', '~> 0.6.23'
+gem 'sass-rails'
 gem 'sitemap_generator'
 gem 'timeline_fu', '~> 0.3.0'
 gem 'treetop-dcf', '~> 0.2.1'
@@ -47,7 +48,6 @@ end
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'sass-rails',   '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
 end
 
