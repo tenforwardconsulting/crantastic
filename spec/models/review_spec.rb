@@ -13,12 +13,12 @@
 #  cached_rating :integer(4)
 #
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Review do
 
-  should_validate_length_of :review, :minimum => 3
-  should_validate_length_of :title, :minimum => 3
+  #should_validate_length_of :review, :minimum => 3
+  #should_validate_length_of :title, :minimum => 3
 
   setup do
     Version.make

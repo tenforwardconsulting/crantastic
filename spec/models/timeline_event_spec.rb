@@ -15,11 +15,11 @@
 #  cached_value           :string(255)
 #
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe TimelineEvent do
 
-  should_validate_presence_of :event_type
+  #should_validate_presence_of :event_type
 
   setup do
     PackageRating.make

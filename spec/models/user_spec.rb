@@ -27,7 +27,7 @@
 #  tos                 :boolean(1)
 #
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe User do
 

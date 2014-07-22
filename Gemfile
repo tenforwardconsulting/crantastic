@@ -27,7 +27,7 @@ gem 'will_paginate'
 gem 'yajl-ruby', '~> 0.7.8', :require => 'yajl'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 1.3.4'
+  gem 'rspec-rails', '~> 2.14'
   gem 'pry', '~> 0.9.12.6'
   gem 'test-unit'
 end
@@ -40,9 +40,7 @@ end
 
 group :test do
   gem 'faker', '~> 0.3.1'
-  gem 'machinist', '~> 1.0.6'
   gem 'markup_validity', '~> 1.1.0'
-  gem 'remarkable_rails', '~> 3.1.13'
   gem 'webrat', '~> 0.7.2'
 end
 
