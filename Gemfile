@@ -39,6 +39,8 @@ end
 group :development do
   gem 'annotate'
   gem 'query_diet'
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'wirble'
 end
 

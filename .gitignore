@@ -12,3 +12,4 @@ config/database.branch.*
 config/database.yml
 test/*
 solr/*
+bin
