@@ -1,7 +1,7 @@
 # It's important that the secondary_subject always is set to Package,
 # and actor always set to User.
 class TimelineEvent < ActiveRecord::Base
-  attr_accessible :subject, :secondary_subject, :event_type
+  attr_accessible :subject, :secondary_subject, :event_type, :actor
 
   default_scope :order => "timeline_event.created_at DESC"
   scope :recent, :limit => 25, :include => [:actor, :subject, :secondary_subject]

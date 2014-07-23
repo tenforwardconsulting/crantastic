@@ -1,17 +1,6 @@
-# == Schema Information
-#
-# Table name: package_rating
-#
-#  id         :integer(4)      not null, primary key
-#  package_id :integer(4)
-#  user_id    :integer(4)
-#  rating     :integer(4)
-#  created_at :datetime
-#  updated_at :datetime
-#  aspect     :string(25)      default("overall"), not null
-#
-
 class PackageRating < ActiveRecord::Base
+
+  attr_accessible :user, :package, :rating, :aspect
 
   belongs_to :user, :touch => true
   belongs_to :package, :touch => true
@@ -22,6 +11,7 @@ class PackageRating < ActiveRecord::Base
 
   validates_existence_of :package_id
   validates_existence_of :user_id
+
   # users can only have one active vote per package:
   validates_uniqueness_of :user_id, :scope => [:package_id, :aspect]
   validates_format_of :rating, :with => /^[1-5]$/

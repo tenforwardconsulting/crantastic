@@ -1,23 +1,10 @@
-# == Schema Information
-#
-# Table name: package_rating
-#
-#  id         :integer(4)      not null, primary key
-#  package_id :integer(4)
-#  user_id    :integer(4)
-#  rating     :integer(4)
-#  created_at :datetime
-#  updated_at :datetime
-#  aspect     :string(25)      default("overall"), not null
-#
-
 require 'spec_helper'
 
 describe PackageRating do
   before(:each) do
     @valid_attributes = {
-      :user => User.make,
-      :package => Package.make,
+      :user => create(:user),
+      :package => create(:package),
       :rating => 2
     }
   end
@@ -29,7 +16,7 @@ describe PackageRating do
     PackageRating.create!(@valid_attributes)
   end
 
-  it "shouldnt be possible for a user to have two active votes for one package" do
+  it "shouldn't be possible for a user to have two active votes for one package" do
     PackageRating.create(@valid_attributes).should be_valid
     PackageRating.create(@valid_attributes).should_not be_valid
   end
