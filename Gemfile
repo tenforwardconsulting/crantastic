@@ -27,21 +27,19 @@ gem 'will_paginate'
 gem 'yajl-ruby', '~> 0.7.8', :require => 'yajl'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.14'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'markup_validity', '~> 1.1.0'
   gem 'pry', '~> 0.9.12.6'
+  gem 'rspec-rails', '~> 2.14'
   gem 'test-unit'
+  gem 'webrat', '~> 0.7.2'
 end
 
 group :development do
   gem 'annotate'
   gem 'query_diet'
   gem 'wirble'
-end
-
-group :test do
-  gem 'faker', '~> 0.3.1'
-  gem 'markup_validity', '~> 1.1.0'
-  gem 'webrat', '~> 0.7.2'
 end
 
 group :assets do

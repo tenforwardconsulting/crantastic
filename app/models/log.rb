@@ -1,19 +1,11 @@
-# == Schema Information
-#
-# Table name: log
-#
-#  id         :integer(4)      not null, primary key
-#  message    :string(255)     not null
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 # Simple general purpose model for logging messages
 class Log < ActiveRecord::Base
 
+  attr_accessible :message
+
   validates_presence_of :message
 
-  after_create lambda { self.trim_entry_count }
+  after_create lambda { Log.trim_entry_count }
 
   def self.max_entries; 500; end # Keep a maximum number of log entries in the db
 

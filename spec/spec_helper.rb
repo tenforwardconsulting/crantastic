@@ -18,11 +18,11 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
     #Authlogic::TestCase::MockController.new
 #end
 
-#class ActsAsSolr::Post
-  #def self.execute(request)
-    #false
-  #end
-#end
+class ActsAsSolr::Post
+  def self.execute(request)
+    false
+  end
+end
 
 
 RSpec.configure do |config|
@@ -67,4 +67,6 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
+
+  include FactoryGirl::Syntax::Methods
 end

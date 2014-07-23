@@ -1,15 +1,6 @@
-# == Schema Information
-#
-# Table name: author
-#
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class Author < ActiveRecord::Base
+
+  attr_accessible :name, :email
 
   is_gravtastic # Enables the Gravtastic plugin for the Author model
 
