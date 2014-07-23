@@ -4,8 +4,8 @@ describe TimelineEvent do
 
   #should_validate_presence_of :event_type
 
-  setup do
-    PackageRating.make
+  before(:each) do
+    create :package_rating
   end
 
   it "should cache package ratings" do
@@ -15,7 +15,7 @@ describe TimelineEvent do
   end
 
   it "should cache task view versions" do
-    event = TaskView.make.update_version("2009-09-09")
+    event = create(:task_view).update_version("2009-09-09")
     event.cached_value.should == TaskView.first.version
   end
 
