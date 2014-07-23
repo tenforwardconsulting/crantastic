@@ -1,18 +1,7 @@
-# == Schema Information
-#
-# Table name: tag
-#
-#  id          :integer(4)      not null, primary key
-#  name        :string(255)     not null
-#  full_name   :string(255)
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
-#  type        :string(25)
-#  version     :string(10)
-#
-
 class Tag < ActiveRecord::Base
+
+  attr_accessible :name
+
   # NOTE: Causes problems for PostgreSQL 8.3. Uncommented until fixed in Rails.
   # default_scope :order => "LOWER(name) ASC"
   scope :ordered, :order => "LOWER(name) ASC"

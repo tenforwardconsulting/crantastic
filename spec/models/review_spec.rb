@@ -1,18 +1,3 @@
-# == Schema Information
-#
-# Table name: review
-#
-#  id            :integer(4)      not null, primary key
-#  package_id    :integer(4)
-#  user_id       :integer(4)
-#  review        :text
-#  title         :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  version_id    :integer(4)
-#  cached_rating :integer(4)
-#
-
 require 'spec_helper'
 
 describe Review do
@@ -20,9 +5,9 @@ describe Review do
   #should_validate_length_of :review, :minimum => 3
   #should_validate_length_of :title, :minimum => 3
 
-  setup do
-    Version.make
-    User.make
+  before(:each) do
+    create :version
+    create :user
   end
 
   it "should strip title and review before validation" do

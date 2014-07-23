@@ -1,29 +1,14 @@
-# == Schema Information
-#
-# Table name: package
-#
-#  id                  :integer(4)      not null, primary key
-#  name                :string(255)
-#  description         :text
-#  created_at          :datetime
-#  latest_version_id   :integer(4)
-#  updated_at          :datetime
-#  package_users_count :integer(4)      default(0), not null
-#  score               :float           default(0.0)
-#
-
 require 'spec_helper'
 
 describe Package do
 
-  def setup
-    User.make
-    User.make(:login => "somethingelse")
+  before(:each) do
+    create_list :user, 2
 
-    Version.make(:package => Package.make(:name => "bio.infer", :updated_at => 1.day.ago),
-                 :maintainer => Author.make)
-    Version.make(:package => Package.make(:name => "ggplot2", :updated_at => 2.days.ago),
-                 :maintainer => Author.make)
+    bio_infer_package = create :package, name: 'bio.infer', updated_at: 1.day.ago
+    ggplot_package = create :package, name: 'ggplot2', updated_at: 2.days.ago
+    create :version, package: bio_infer_package, maintainer: create(:author)
+    create :version, package: ggplot_package, maintainer: create(:author)
     @pkg = Package.first
   end
 
@@ -43,7 +28,7 @@ describe Package do
   it "should be case insensitive on package name" do
     Package.new(:name => "Bio.infeR").should_not be_valid
     Package.new(:name => "GGPLOT2").should_not be_valid
-    Package.new(:name => "ggplot3").should be_valid
+    Package.new(:name => "foobar_package").should be_valid
   end
 
   it "should be considered equal if they have the same name" do
@@ -67,33 +52,33 @@ describe Package do
   it "should be marked as updated after it receives a new version" do
     pkg = Package.find_by_param("bio.infer")
     prev_time = pkg.updated_at
-    Version.make(:package => pkg, :maintainer => Author.first, :version => "5.3")
+    create :version, :package => pkg, :maintainer => Author.first, :version => "5.3"
     (pkg.updated_at > prev_time).should be_true
   end
 
   it "should be marked as updated after it receives a new tagging" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
-    Tagging.make(:package => pkg, :user => User.first)
+    create :tagging, :package => pkg, :user => User.first
     (pkg.updated_at > prev_time).should be_true
   end
 
   it "should be marked as updated after it receives a new rating" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
-    PackageRating.make(:package => pkg, :user => User.first)
+    create :package_rating, :package => pkg, :user => User.first
     (pkg.updated_at > prev_time).should be_true
   end
 
   it "should be marked as updated after it receives a new review" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
-    Review.make(:package => pkg, :version => pkg.latest, :user => User.last)
+    create :review, :package => pkg, :version => pkg.latest, :user => User.last
     (pkg.updated_at > prev_time).should be_true
   end
 
   it "should return the created_at timestamp if updated_at is nil" do
-    pkg = Package.make
+    pkg = create :package
     pkg.updated_at.should == pkg.created_at
     sql = "UPDATE package SET updated_at = NULL where id = #{pkg.id}"
     ActiveRecord::Base.connection.execute(sql)
@@ -137,7 +122,7 @@ describe Package do
 
     it "should discard old ratings" do
       u = User.first
-      p = Package.make
+      p = create :package
 
       u.rate!(p, 1)
       r1 = u.rating_for(p)

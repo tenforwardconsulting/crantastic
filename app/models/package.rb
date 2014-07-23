@@ -1,5 +1,7 @@
 class Package < ActiveRecord::Base
 
+  attr_accessible :name
+
   # Specifies the fields that should be indexed with Solr. Note that the tags
   # association is indexed, so if e.g. a package is tagged with
   # 'ItemResponseTheory' it will show up in the result list if someone searches

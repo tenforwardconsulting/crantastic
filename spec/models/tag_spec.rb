@@ -1,27 +1,10 @@
-# == Schema Information
-#
-# Table name: tag
-#
-#  id          :integer(4)      not null, primary key
-#  name        :string(255)     not null
-#  full_name   :string(255)
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
-#  type        :string(25)
-#  version     :string(10)
-#
-
 require 'spec_helper'
 
 describe Tag do
 
-  setup do
-    Tagging.make
-    Package.make(:name => "ggplot2")
-  end
-
   before(:each) do
+    create :tagging
+    create :package, :name => 'ggplot2'
     @tag = Tag.new
   end
 
@@ -58,18 +41,18 @@ describe Tag do
   end
 
   it "should be marked as updated after it receives a new tagging" do
-    tag = Tag.first
+    tag = create :tag
     prev_time = tag.updated_at
-    Tagging.make(:package => Package.find_by_param("ggplot2"),
-                 :user => User.first,
-                 :tag => tag)
+    create :tagging, :package => Package.find_by_param("ggplot2"),
+                    :user => User.first,
+                    :tag => tag
     (tag.updated_at > prev_time).should be_true
   end
 
   describe TaskView do
 
     it "should update its version and fire a timeline event" do
-      t = TaskView.make(:version => "2009-06-06")
+      t = create :task_view, :version => "2009-06-06"
       TimelineEvent.should_receive(:create!)
       t.update_version("2009-07-07")
       t.version.should == "2009-07-07"

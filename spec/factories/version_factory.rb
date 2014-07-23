@@ -3,9 +3,6 @@ FactoryGirl.define do
     version { Faker::Lorem.word }
     name { Faker::Lorem.word }
     package
-
-    trait :with_maintainer do
-      maintainer { FactoryGirl.create :author }
-    end
+    maintainer { FactoryGirl.create :author }
   end
 end

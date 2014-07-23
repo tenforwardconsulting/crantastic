@@ -1,22 +1,10 @@
-# == Schema Information
-#
-# Table name: package_user
-#
-#  id         :integer(4)      not null, primary key
-#  package_id :integer(4)
-#  user_id    :integer(4)
-#  created_at :datetime
-#  updated_at :datetime
-#  active     :boolean(1)      default(TRUE), not null
-#
-
 require 'spec_helper'
 
 describe PackageUser do
 
-  setup do
-    Package.make
-    User.make
+  before(:each) do
+    create :package
+    create :user
   end
 
   it "should have a counter cache for the number of votes" do
