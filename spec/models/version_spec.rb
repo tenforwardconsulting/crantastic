@@ -1,41 +1,11 @@
-# == Schema Information
-#
-# Table name: version
-#
-#  id                     :integer(4)      not null, primary key
-#  package_id             :integer(4)
-#  name                   :string(255)
-#  title                  :string(255)
-#  description            :text
-#  license                :text
-#  version                :string(255)
-#  depends                :text
-#  suggests               :text
-#  author                 :text
-#  url                    :string(255)
-#  date                   :date
-#  readme                 :text
-#  changelog              :text
-#  news                   :text
-#  diff                   :text
-#  created_at             :datetime
-#  updated_at             :datetime
-#  maintainer_id          :integer(4)
-#  imports                :text
-#  enhances               :text
-#  priority               :string(255)
-#  publicized_or_packaged :datetime
-#  version_changes        :text
-#
-
 require 'spec_helper'
 
 describe Version do
 
-  setup do
-    Version.make
-    Author.make
-    User.make(:id => 146)
+  before(:each) do
+    create :version
+    create :author
+    create :user
   end
 
   #should_allow_values_for :title, "Title", "", :allow_nil => true

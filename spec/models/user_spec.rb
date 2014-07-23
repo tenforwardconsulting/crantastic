@@ -1,39 +1,10 @@
-# == Schema Information
-#
-# Table name: user
-#
-#  id                  :integer(4)      not null, primary key
-#  login               :string(255)
-#  email               :string(255)
-#  crypted_password    :string(255)
-#  password_salt       :string(255)
-#  created_at          :datetime
-#  updated_at          :datetime
-#  activated_at        :datetime
-#  remember            :boolean(1)      default(FALSE), not null
-#  homepage            :string(255)
-#  profile             :text
-#  profile_html        :text
-#  single_access_token :string(255)     default(""), not null
-#  role_name           :string(40)
-#  perishable_token    :string(40)
-#  persistence_token   :string(128)     default(""), not null
-#  login_count         :integer(4)      default(0), not null
-#  last_request_at     :datetime
-#  last_login_at       :datetime
-#  current_login_at    :datetime
-#  last_login_ip       :string(255)
-#  current_login_ip    :string(255)
-#  tos                 :boolean(1)
-#
-
 require 'spec_helper'
 
 describe User do
 
-  setup do
-    User.make
-    Version.make
+  before(:each) do
+    create :user
+    create :version
   end
 
   it "accounts created with rpx should be valid even if they have blank password" do
@@ -59,9 +30,9 @@ describe User do
 
   it "should not allow mismatched passwords" do
     u = User.new(:login => "puppet", :email => "puppet@acme.com",
-                 :password => "321asd", :password_confirmation => "123asd")
+                 :password => "foobar", :password_confirmation => "bazbar")
     u.should_not be_valid
-    u.errors.on(:password).should == "doesn't match confirmation"
+    u.errors[:password].first.should == "doesn't match confirmation"
   end
 
   it "should store activation time when activated" do
@@ -77,7 +48,7 @@ describe User do
     u = User.first
     markdown = "**Hello** _world_"
     u.profile = markdown
-    u.save(false)
+    u.save(validate: false)
     u.reload
     u.profile_html.should == Maruku.new(markdown).to_html
   end

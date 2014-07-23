@@ -1,23 +1,10 @@
-# == Schema Information
-#
-# Table name: weekly_digest
-#
-#  id         :integer(4)      not null, primary key
-#  param      :string(255)     not null
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 require 'spec_helper'
 
 describe WeeklyDigest do
 
-  setup do
+  before(:each) do
     wd = WeeklyDigest.create
     wd.update_attribute(:created_at, DateTime.parse("30 jul 2009"))
-  end
-
-  before(:each) do
     @digest = WeeklyDigest.first
   end
 
