@@ -75,7 +75,7 @@ Crantastic::Application.routes.draw do
   match 'daily/:day', :controller => 'weekly_digests', :action => 'daily'
   match 'signup', :controller => 'users', :action => 'new'
   match 'thanks', :controller => 'users', :action => 'thanks'
-  match 'activate/:activation_code', :controller => 'users', :action => 'activate'
+  match 'activate/:activation_code', :controller => 'users', :action => 'activate', as: 'activate'
   match 'login', :controller => 'sessions', :action => 'new'
   match 'logout', :controller => 'sessions', :action => 'destroy'
   match 'popcon', :controller => 'packages', :action => 'index', :popcon => '1'

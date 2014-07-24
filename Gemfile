@@ -32,7 +32,7 @@ group :development, :test do
   gem 'pry', '~> 0.9.12.6'
   gem 'rspec-rails', '~> 2.14'
   gem 'test-unit'
-  gem 'webrat', '~> 0.7.2'
+  gem 'capybara'
 end
 
 group :development do

@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rails'
 #require 'authlogic/test_case'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -69,4 +70,5 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   include FactoryGirl::Syntax::Methods
+  config.include FeatureHelpers, type: :feature
 end

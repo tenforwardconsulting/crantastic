@@ -4,11 +4,11 @@
 <% unless params[:show_rpx] == "false" %>
   <strong>Sign up with your third-party identification (recommended)</strong></p>
 
-<%= rpx_embed_code %>
+  <%= rpx_embed_code %>
 
-<p><strong>or fill out the form below</strong></p>
+  <p><strong>or fill out the form below</strong></p>
 <% else %>
-<p><strong>Fill out the form below:</strong></p>
+  <p><strong>Fill out the form below:</strong></p>
 <% end %>
 
-<%= render :partial => "form" , :locals => { :user => @user }%>
+<%= render :partial => "form" %>
