@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe ApplicationHelper do
 
@@ -9,10 +9,10 @@ describe ApplicationHelper do
   it "should have a title helper that figures out if the title is plural or not" do
     helper.title.should == "It's crantastic!" # The default title
 
-    assigns[:title] = "Welcome"
+    assign :title, 'Welcome'
     helper.title.should == "Welcome. It's crantastic!"
 
-    assigns[:title] = "Tags"
+    assign :title, 'Tags'
     helper.title.should == "Tags. They're crantastic!"
   end
 

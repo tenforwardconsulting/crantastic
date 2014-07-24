@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe PackagesHelper do
 
-  def setup
+  before(:each) do
     @pkg = Package.new
   end
 
