@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 include AuthHelper
 
 describe UsersController do
 
-  integrate_views
+  render_views
 
   it "should render the index successfully" do
     get :index
@@ -14,12 +14,12 @@ describe UsersController do
   it "should have a atom feed for user activity" do
     User.should_receive(:find).twice.with("2").and_return(stub_model(User))
     get :show, :id => "2", :format => "atom"
-    response.status.should == "200 OK"
+    response.status.should == 200
   end
 
   it "should do a 404 for unknown users" do
     get :show, :id => 9999
-    response.status.should == "404 Not Found"
+    response.status.should == 404
   end
 
   it "should render the signup page successfully" do
@@ -54,14 +54,14 @@ describe UsersController do
       login_as_user(:id => 1)
       User.should_receive(:find).with("2").and_return(stub_model(User))
       get :edit, :id => "2"
-      response.status.should == "403 Forbidden"
+      response.status.should == 403
     end
 
     it "should not let users update other users profiles" do
       login_as_user(:id => 1)
       User.should_receive(:find).with("2").and_return(stub_model(User))
       put :update, :id => "2"
-      response.status.should == "403 Forbidden"
+      response.status.should == 403
     end
 
   end

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe SessionsController do
 
@@ -6,11 +6,11 @@ describe SessionsController do
 
     it "should return status forbidden if accessing rpx_token without a token" do
       get "rpx_token"
-      response.status.should == "403 Forbidden"
+      response.status.should == 403
     end
 
     it "should create a user from RPXNow user data" do
-      User.make(:email => "john@domain.com").activate
+      create(:user, email: 'john@domain.com').activate
       user = User.find_by_email("john@domain.com")
       token = "asdfasdf1231231ij"
       data = {
@@ -27,7 +27,7 @@ describe SessionsController do
 
       get :rpx_token, :token => token
 
-      response.flash[:notice].should == "Logged in successfully!"
+      flash[:notice].should == "Logged in successfully!"
       response.should be_redirect
       response.should redirect_to("http://test.host/users/#{user.id}")
     end

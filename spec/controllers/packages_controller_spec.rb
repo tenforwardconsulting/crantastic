@@ -1,15 +1,15 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 include AuthHelper
 
 describe PackagesController do
 
-  setup do
-    Version.make(:package => Package.make(:name => "rJython"))
-    Version.make(:package => Package.make(:name => "data.table"))
+  before(:each) do
+    create :version, package: create(:package, name: 'rJython')
+    create :version, package: create(:package, name: 'data.table')
   end
 
-  integrate_views
+  render_views
 
   it "should render the index successfully" do
     get :index

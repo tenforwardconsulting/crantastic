@@ -1,12 +1,12 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe VersionsController do
 
-  setup do
-    Version.make(:package => Package.make(:name => "rJython"))
+  before(:each) do
+    create :version, package: create(:package, name: 'rJython')
   end
 
-  integrate_views
+  render_views
 
   it "should have an atom feed" do
     get :feed, :format => "atom"

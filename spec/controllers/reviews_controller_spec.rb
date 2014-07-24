@@ -1,12 +1,12 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 include AuthHelper
 
 describe ReviewsController do
 
-  setup do
-    Version.make
-    Review.make(:package => Package.first)
+  before(:each) do
+    create :version
+    create :review, package: Package.first
   end
 
   it "should render the index successfully" do
@@ -63,7 +63,7 @@ describe ReviewsController do
 
   describe "XHTML Markup" do
 
-    integrate_views
+    render_views
 
     before(:each) do
       @review = Review.first

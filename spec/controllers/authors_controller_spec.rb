@@ -1,13 +1,13 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe AuthorsController do
 
-  def setup
-    @version = Version.make
+  before(:each) do
+    @version = create :version
     @author = @version.maintainer
   end
 
-  integrate_views
+  render_views
 
   it "should do a 404 for unknown ids" do
     get :show, :id => 9999

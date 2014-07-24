@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe TaggingsController do
 
-  setup do
-    Tagging.make
-    User.make(:login => "malicious")
+  before(:each) do
+    create :tagging, :with_package
+    create :user, login: 'malicious'
   end
 
   it "should redirect to login when attempting to tag without logging in first" do
@@ -28,7 +28,7 @@ describe TaggingsController do
     controller.instance_variable_set(:@current_user, user)
     delete :destroy, :package_id => tagging.package.name, :id => tagging.id
     Tagging.count(:conditions => { :id => tagging.id }).should == 1
-    response.status.should == "403 Forbidden"
+    response.status.should == 403
   end
 
 end

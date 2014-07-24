@@ -16,9 +16,17 @@ Crantastic::Application.routes.draw do
 
   resources :timeline_events, :only => [ :index, :show ]
 
-  resources :users, :except => [ :destroy ], :member => { :regenerate_api_key => [ :get, :post ] }
+  resources :users, :except => [:destroy] do
+    member do
+      match :regenerate_api_key, via: [:get, :post]
+    end
+  end
 
-  resources :versions, :only => [ :index, :create ], :collection => { :feed => :get }
+  resources :versions, :only => [:index, :create] do
+    collection do
+      get :feed
+    end
+  end
 
   resources :votes, :only => [ :create ]
 
@@ -52,7 +60,11 @@ Crantastic::Application.routes.draw do
 
   # Singleton resources
   resource :search, :controller => "search", :only => [ :show ]
-  resource :session, :collection => { :rpx_token => :get }, :only => [ :new, :create, :destroy ]
+  resource :session, only: [:new, :create, :destroy] do
+    collection do
+      get :rpx_token
+    end
+  end
 
   match 'about', :to => 'static#about'
   match 'email_notifications', :to => 'static#email_notifications'

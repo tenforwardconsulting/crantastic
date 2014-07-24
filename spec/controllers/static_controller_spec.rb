@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe StaticController do
 
-  integrate_views
+  render_views
 
   it "should set correct title for the about page" do
     get :about

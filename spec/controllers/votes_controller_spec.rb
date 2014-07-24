@@ -1,12 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe VotesController do
 
-  setup do
-    User.make.activate
-  end
-
   before(:each) do
+    create(:user).activate
     @user = User.first
   end
 
@@ -16,11 +13,11 @@ describe VotesController do
   end
 
   it "should create new package votes" do
-    ggplot = Package.make(:name => "ggplot")
-    rjson  = Package.make(:name => "rjson")
+    ggplot = create :package, name: 'ggplot'
+    rjson  = create :package, name: 'rjson'
     post :create, :packages => "ggplot,rjson", :user_credentials => @user.single_access_token
     response.should_not be_redirect
-    response.status.should == "200 OK"
+    response.status.should == 200
     PackageUser.count.should == 2
     @user.reload
     @user.uses?(ggplot).should be_true

@@ -1,12 +1,12 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe TimelineEventsController do
 
-  setup do
+  before(:each) do
     make_timeline_event_for_version
   end
 
-  integrate_views
+  render_views
 
   it "should set the page title" do
     get :index

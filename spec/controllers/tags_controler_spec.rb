@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 include AuthHelper
 
 describe TagsController do
 
-  def setup
-    @tag = Tag.make
+  before(:each) do
+    @tag = create :tag
   end
 
   it "should render the index successfully" do
@@ -16,7 +16,7 @@ describe TagsController do
 
   it "should have a atom feed for tag activity" do
     get :show, :id => @tag.name, :format => "atom"
-    response.status.should == "200 OK"
+    response.status.should == 200
   end
 
 end
