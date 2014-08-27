@@ -13,3 +13,4 @@ config/database.yml
 test/*
 solr/*
 bin
+.DS_Store
