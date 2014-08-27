@@ -6,7 +6,8 @@ class PackageDependsEnhancesSuggests < ActiveRecord::Migration
     end
 
     add_index :required_package_version, [:version_id, :required_package_id],
-                                          :unique => true
+                                          :unique => true,
+                                          :name => 'rpv_version_id_package_id'
 
     create_table :enhanced_package_version, :id => false do |t|
       t.integer :version_id, :null => false
@@ -14,7 +15,8 @@ class PackageDependsEnhancesSuggests < ActiveRecord::Migration
     end
 
     add_index :enhanced_package_version, [:version_id, :enhanced_package_id],
-                                          :unique => true
+                                          :unique => true,
+                                          :name => 'epv_version_id_package_id'
 
     create_table :suggested_package_version, :id => false do |t|
       t.integer :version_id, :null => false
@@ -22,7 +24,8 @@ class PackageDependsEnhancesSuggests < ActiveRecord::Migration
     end
 
     add_index :suggested_package_version, [:version_id, :suggested_package_id],
-                                          :unique => true
+                                          :unique => true,
+                                          :name => 'spv_version_id_package_id'
 
     # Create associations for existing data
     Version.all.each do |v|

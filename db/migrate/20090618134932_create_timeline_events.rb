@@ -8,7 +8,8 @@ class CreateTimelineEvents < ActiveRecord::Migration
 
     add_index :timeline_event, [:subject_type, :subject_id,
                                 :actor_type, :actor_id,
-                                :secondary_subject_type, :secondary_subject_id]
+                                :secondary_subject_type, :secondary_subject_id],
+                            :name => 'timeline_event_subject_index'
   end
 
   def self.down
