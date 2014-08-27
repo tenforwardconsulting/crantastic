@@ -5,6 +5,7 @@ gem 'rails', '3.2.19'
 gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
 gem 'cancan', '~> 1.4.0'
+gem 'capistrano-rails'
 gem 'compass-rails'
 gem 'couchrest', '~> 0.37'
 gem 'gravtastic', '~> 2.2.0'
@@ -15,7 +16,6 @@ gem 'mysql', '~> 2.8.1'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~> 1.4.4'
 gem 'oauth', '~> 0.4.4'
-gem 'passenger', '3.0.5'
 gem 'recaptcha', '~> 0.2.3', :require => 'recaptcha/rails'
 gem 'rollbar'
 gem 'rpx_now', '~> 0.6.23'
@@ -46,5 +46,6 @@ end
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
 end
 
