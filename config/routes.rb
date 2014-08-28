@@ -84,4 +84,7 @@ Crantastic::Application.routes.draw do
 
   # TODO No idea what this is wanting to do
   #map.error '*url', :controller => 'static', :action => 'error_404'
+  
+  # Any routes that aren't defined above here go to the 404
+  match "*a", :to => 'static#error_404'
 end
