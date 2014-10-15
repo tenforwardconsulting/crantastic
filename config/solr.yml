@@ -6,6 +6,9 @@
 development:
   url: http://127.0.0.1:8983/solr
 
+staging:
+  url: http://127.0.0.1:8080/solr
+
 production:
   url: http://208.78.99.54:8983/solr
 
