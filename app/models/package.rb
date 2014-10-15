@@ -96,7 +96,11 @@ class Package < ActiveRecord::Base
   end
 
   def ==(other)
-    self.name.downcase == other.name.downcase
+    if other.kind_of? Package
+      self.name.downcase == other.name.downcase
+    else
+      super
+    end
   end
 
   # If updated_at is nil (which is the case for some older records), return
