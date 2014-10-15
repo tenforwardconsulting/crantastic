@@ -17,11 +17,11 @@ class Log < ActiveRecord::Base
   def self.log_and_report!(msg, request={}, quiet=false)
     msg = msg.respond_to?(:to_s) ? msg.to_s : "Unknown error"
     self.log!(msg, quiet)
-    HoptoadNotifier.notify(
-                           :error_class => "Log error",
-                           :error_message => msg,
-                           :parameters => request
-                           )
+    # HoptoadNotifier.notify(
+    #                        :error_class => "Log error",
+    #                        :error_message => msg,
+    #                        :parameters => request
+    #                        )
   end
 
   def self.trim_entry_count

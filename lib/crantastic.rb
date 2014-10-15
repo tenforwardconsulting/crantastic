@@ -37,6 +37,17 @@ module Crantastic
         if cur
           if cur.latest_version.nil?
             Log.log_and_report! "Problem with package #{package}: latest_version missing!"
+            Log.log_and_report! "Trying to store version: #{version} for package: #{package}"
+            begin
+              ver = add_version_to_db(CRAN::CranPackage.new(package, version), cur.id)
+              if ver.nil?
+                Log.log_and_report! "Problem with package #{package}: could not store #{version}"
+              else
+                Log.log_and_report! "Successfully stored version: #{version} for package: #{package}"
+              end
+            rescue Exception => e
+              Log.log_and_report! "Problem with package #{package}: could not store #{version}"
+            end
           elsif cur.latest_version.version != version
             Log.log!("Updating package: #{package} (#{version})")
             begin
