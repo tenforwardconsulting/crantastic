@@ -1,3 +1,4 @@
+require 'crantastic'
 namespace :crantastic do
 
   desc "Cron task, updates package versions and task views"
