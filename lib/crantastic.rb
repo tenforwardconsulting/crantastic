@@ -42,6 +42,7 @@ module Crantastic
             begin
               add_version_to_db(CRAN::CranPackage.new(package, version), cur.id)
             rescue Exception => e
+              Log.log_and_report! "Problem with package #{package}: could not store #{version}"
               # we can ignore the fact that the version upgrade failed, it will
               # be retried the next time the updater runs.
             end
@@ -59,6 +60,7 @@ module Crantastic
               pkg.delete
             end
           rescue Exception => e
+            Log.log_and_report! "Problem with package #{package}: could not store #{version}"
             pkg.delete
           end
         end
