@@ -26,7 +26,7 @@ class Package < ActiveRecord::Base
   has_many :tags, :through => :taggings, :uniq => true do
     # @param [String, Class] type E.g. Priority or TaskView
     def type(type)
-      proxy_owner.tags.where(:conditions => ["type = ?", type.to_s])
+      proxy_association.owner.tags.where(:conditions => ["type = ?", type.to_s])
     end
   end
 
