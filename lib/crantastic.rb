@@ -80,7 +80,7 @@ module Crantastic
       `curl -s "http://cran.r-project.org/src/contrib/#{pkg.name}_#{pkg.version}.tar.gz" -o tmp/#{filename}`
       `tar -C tmp -zxvf tmp/#{filename}; rm tmp/#{filename}`
 
-      pkgdir = File.join(RAILS_ROOT, "/tmp/#{pkg.name}/")
+      pkgdir = File.join(Rails.root, "/tmp/#{pkg.name}/")
 
       description = Dcf.parse(File.read(pkgdir + "DESCRIPTION"))
       throw Exception.new("Couldn't parse DESCRIPTION for #{pkg.name}. " +
