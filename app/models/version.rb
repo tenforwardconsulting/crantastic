@@ -35,6 +35,8 @@ class Version < ActiveRecord::Base
   validates_length_of :title, :in => 0..255, :allow_nil => true
   validates_length_of :url, :in => 0..255, :allow_nil => true
 
+  attr_accessible :title, :date, :author, :description, :url, :license, :name, :version, :publicized_or_packaged, :maintainer_id, :package_id
+
   def <=>(other)
     self.name.downcase <=> other.name.downcase
   end
