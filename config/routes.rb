@@ -38,7 +38,7 @@ Crantastic::Application.routes.draw do
   # valid formats, so that we don't break e.g. .xml urls.
 
   # TODO This can probably go in the resources somehow?
-  match 'packages/:id', :to => 'packages#show', :requirements => { :id => /.+\.(?!xml|atom|html|bibjs).*/ }
+  match 'packages/:id', :to => 'packages#show', :constraints => { :id => /.+\.(?!xml|atom|html|bibjs).*/ }
   resources :packages, :except => [:update, :edit] do
     collection do
       get :all
@@ -84,7 +84,7 @@ Crantastic::Application.routes.draw do
 
   # TODO No idea what this is wanting to do
   #map.error '*url', :controller => 'static', :action => 'error_404'
-  
+
   # Any routes that aren't defined above here go to the 404
   match "*a", :to => 'static#error_404'
 end
