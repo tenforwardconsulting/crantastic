@@ -33,7 +33,6 @@ class Version < ActiveRecord::Base
   validates_length_of :name, :in => 2..255
   validates_length_of :version, :in => 1..25
   validates_length_of :title, :in => 0..255, :allow_nil => true
-  validates_length_of :url, :in => 0..255, :allow_nil => true
 
   attr_accessible :title, :date, :author, :description, :url, :license, :name, :version, :publicized_or_packaged, :maintainer_id, :package_id
 
