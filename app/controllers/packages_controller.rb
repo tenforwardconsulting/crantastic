@@ -67,7 +67,8 @@ class PackagesController < ApplicationController
       return
     end
     @version = @package.latest
-    @tagging = Tagging.new(:package => @package)
+    @tagging = Tagging.new
+    @tagging.package = @package
     @title = "The #{@package} package"
 
     respond_to do |format|
