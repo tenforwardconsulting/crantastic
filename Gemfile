@@ -6,6 +6,7 @@ gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
 gem 'cancan', '~> 1.4.0'
 gem 'capistrano-rails'
+gem 'compass-blueprint'
 gem 'compass-rails'
 gem 'couchrest', '~> 0.37'
 gem 'gravtastic', '~> 2.2.0'
@@ -46,7 +47,6 @@ end
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer'
+  gem 'uglifier', '>= 1.0.3'
 end
-
