@@ -9,14 +9,14 @@ class Log < ActiveRecord::Base
 
   def self.max_entries; 500; end # Keep a maximum number of log entries in the db
 
-  def self.log!(msg, quiet=false)
+  def self.log!(msg, quiet = false)
     puts msg unless quiet
     Log.create!(:message => msg[0,255])
   end
 
-  def self.log_and_report!(msg, exception=nil)
+  def self.log_and_report!(msg, exception = nil)
     msg = msg.respond_to?(:to_s) ? msg.to_s : "Unknown error"
-    self.log!(msg, quiet)
+    self.log!(msg)
     if exception
       Rollbar.report_exception(exception)
     else
