@@ -37,7 +37,7 @@ class Tag < ActiveRecord::Base
   end
 
   def self.find_by_param(id)
-    self.find_by_name!(id, :conditions => ["type IS NULL"])
+    self.find_by_name!(id)
   end
 
   def ==(other)
