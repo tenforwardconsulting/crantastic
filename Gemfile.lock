@@ -71,6 +71,8 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.2.19)
+    compass-blueprint (1.0.0)
+      compass
     compass-rails (2.0.0)
       compass (>= 0.12.2)
     couchrest (0.38)
@@ -234,6 +236,7 @@ DEPENDENCIES
   capistrano-rails
   capybara
   coffee-rails (~> 3.2.1)
+  compass-blueprint
   compass-rails
   couchrest (~> 0.37)
   factory_girl_rails
