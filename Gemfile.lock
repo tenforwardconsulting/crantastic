@@ -121,7 +121,7 @@ GEM
     mime-types (1.25.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
-    mysql (2.8.1)
+    mysql2 (0.3.17)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
@@ -250,7 +250,7 @@ DEPENDENCIES
   jquery-rails
   markup_validity (~> 1.1.0)
   maruku (~> 0.6.0)
-  mysql (~> 2.8.1)
+  mysql2
   newrelic_rpm
   nokogiri (~> 1.4.4)
   oauth (~> 0.4.4)
