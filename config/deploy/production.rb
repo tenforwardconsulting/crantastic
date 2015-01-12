@@ -26,6 +26,7 @@ server 'crantastic.org', user: 'crantastic', roles: %w{web app db}
 # Global options
 # --------------
 set :tmp_dir, "/home/crantastic/tmp"
+set :rvm_ruby_string, :release_path
 #  set :ssh_options, {
 #    keys: %w(/home/rlisowski/.ssh/id_rsa),
 #    forward_agent: false,
