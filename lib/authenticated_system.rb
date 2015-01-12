@@ -89,7 +89,7 @@ module AuthenticatedSystem
   # Store the URI of the current request in the session, unless already logged in.
   #
   # We can return to this location by calling #redirect_back_or_default.
-  def store_location(location = request.request_uri)
+  def store_location(location = request.url)
     session[:return_post_params] = params if request.method == :post
     session[:return_to] = location unless logged_in?
   end

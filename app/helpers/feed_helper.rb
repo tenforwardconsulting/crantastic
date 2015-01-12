@@ -1,3 +1,4 @@
+require 'active_support/builder'
 module FeedHelper
 
   # Obj is set to nil for the main timeline feed
