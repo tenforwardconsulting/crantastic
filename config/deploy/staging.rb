@@ -15,6 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
+set :rvm_roles, [:none]
 server 'crantastic.10fw.net', user: 'deploy', roles: %w{web app db}
 
 
