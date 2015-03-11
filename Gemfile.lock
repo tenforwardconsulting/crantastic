@@ -28,6 +28,7 @@ GEM
     activesupport (3.2.19)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    addressable (2.3.7)
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -109,6 +110,10 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.2.4)
     json_pure (1.8.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.3.0)
+      launchy (~> 2.2)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -248,6 +253,7 @@ DEPENDENCIES
   gravtastic (~> 2.2.0)
   haml
   jquery-rails
+  letter_opener
   markup_validity (~> 1.1.0)
   maruku (~> 0.6.0)
   mysql2
