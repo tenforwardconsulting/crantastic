@@ -1,0 +1,12 @@
+<%# locals model, model_name%>
+<% model_name ||= model.class.name.underscore.gsub '_', ' ' %>
+<% if model.errors.any? %>
+  <div class="error_explanation">
+    <p><%= "#{pluralize(model.errors.count, 'error')} prohibited this #{model_name} from being saved:" %></p>
+    <ul>
+      <%- model.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
