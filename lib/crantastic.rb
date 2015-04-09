@@ -34,12 +34,12 @@ module Crantastic
 
         next if package == "orientlib" && version == "0.10.1" # known bad entry
 
-        crantastic_pacakge = crantastic_pkgs.find { |pkg| pkg.name.downcase == package.downcase }
-        if crantastic_pacakge
-          if crantastic_pacakge.latest_version.try(:version) != version
+        crantastic_package = crantastic_pkgs.find { |pkg| pkg.name.downcase == package.downcase }
+        if crantastic_package
+          if !crantastic_package.versions.find_by_version(version).present?
             Log.log!("Updating package: #{package} (#{version})")
             begin
-              add_version_to_db(CRAN::CranPackage.new(package, version), crantastic_pacakge.id)
+              add_version_to_db(CRAN::CranPackage.new(package, version), crantastic_package.id)
             rescue Exception => e
               Log.log_and_report! "Problem with package #{package}: could not store #{version}", e
               # we can ignore the fact that the version upgrade failed, it will
