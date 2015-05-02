@@ -33,7 +33,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'letter_opener'
-  gem 'markup_validity', '~> 1.1.0'
   gem 'pry', '~> 0.9.12.6'
   gem 'rspec-rails', '~> 2.14'
   gem 'test-unit'
