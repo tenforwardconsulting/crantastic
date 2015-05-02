@@ -6,6 +6,6 @@ FactoryGirl.define do
     version {generate(:name) }
     name { generate(:name) }
     package
-    maintainer { FactoryGirl.create :author }
+    association :maintainer, factory: :author
   end
 end
