@@ -2,110 +2,146 @@ require 'spec_helper'
 
 describe Version do
 
-  before(:each) do
-    create :version
-    create :author
-    create :user
+  let(:version) { FactoryGirl.build_stubbed :version }
+  let(:author) { FactoryGirl.build_stubbed :author }
+  let(:package) { version.package }
+
+  it 'has a valid factory' do
+    expect(version).to be_valid
   end
 
-  #should_allow_values_for :title, "Title", "", :allow_nil => true
-  #should_allow_values_for :url, "http://foo.bar", "", :allow_nil => true
+  describe "validations" do
+    it 'does not require a title' do
+      version.title = nil
+      expect(version).to be_valid
+    end
+    it 'does not require a url' do
+      version.url = nil
+      expect(version).to be_valid
+    end
+    it 'requires a version' do
+      version.version = nil
+      expect(version).to_not be_valid
+    end
 
-  #should_validate_presence_of :version
+    it 'requires names to be >1 character' do
+      version.name = "a"
+      expect(version).to_not be_valid
+    end
 
-  #should_validate_length_of :name, :minimum => 2, :maximum => 255
-  #should_validate_length_of :version, :minimum => 1, :maximum => 25
-  #should_validate_length_of :title, :minimum => 0, :maximum => 255
-  #should_validate_length_of :url, :minimum => 0, :maximum => 255
+    it 'requires names to be <256 characters' do
+      version.name = "a"*256
+      expect(version).to_not be_valid
+    end
+    it 'requires version to be >0 character' do
+      version.version = ""
+      expect(version).to_not be_valid
+    end
+
+    it 'requires version to be <26 characters' do
+      version.version = "a"*26
+      expect(version).to_not be_valid
+    end
+    it 'requires title to be <256 characters' do
+      version.title = "a"*256
+      expect(version).to_not be_valid
+    end
+
+  end
 
   it "should set itself as the package's latest version when created'" do
-    ver1 = Version.first
+    version_1 = FactoryGirl.create(:version)
+    package = version_1.package
+    package.latest_version.should == version_1
 
-    pkg = Package.first
-    pkg.latest_version.should == ver1
-
-    ver2 = Version.create!(:package => pkg, :name => pkg.name, :version => "2.0",
-                           :maintainer => Author.first)
-    pkg.latest_version.should == ver2
+    ver2 = Version.new do |v|
+      v.package = package
+      v.name = package.name
+      v.version = "2.0"
+      v.maintainer = author
+    end
+    ver2.save!
+    package.latest_version.should == ver2
   end
 
   it "should know its previous version" do
-    pkg = Package.first
-    ver1 = pkg.versions.first
-    ver2 = Version.create!(:package => pkg, :name => pkg.name, :version => "3.0",
-                           :maintainer => Author.first)
+    ver1 = package.versions.first
+    ver2 = Version.new do |v|
+      v.package = package
+      v.name = package.name
+      v.version = "3.0"
+      v.maintainer = author
+    end
+    ver2.save!
 
     ver2.previous.should == ver1
   end
 
   it "should use its version as a string representation" do
-    Version.first.to_s.should == Version.first.version
+    expect(version.to_s).to eq(version.version)
   end
 
   it "should know its cran url" do
-    Version.first.cran_url.should ==
-      "http://cran.r-project.org/web/packages/#{Version.first.name}"
+    expect(version.cran_url).to eq("http://cran.r-project.org/web/packages/#{version.name}")
   end
 
   it "should produce a list of urls" do
-    ver = Version.first
-    ver.url = "http://foo, http://bar"
+    version.url = "http://foo, http://bar"
 
-    ver.urls.should == ["http://foo", "http://bar",
-                        "http://cran.r-project.org/web/packages/#{ver.name}"]
+    version.urls.should == ["http://foo", "http://bar",
+                        "http://cran.r-project.org/web/packages/#{version.name}"]
   end
 
   it "should handle priority taggings" do
-    pkg = Package.make
-    pkg.tags.type("Priority").size.should == 0
+    package = FactoryGirl.create(:version).package
+    package.tags.type("Priority").size.should == 0
 
-    Version.make(:package => pkg,
+    FactoryGirl.create(:version, :package => package,
                  :priority => "",
                  :maintainer => Author.first)
-    pkg.tags.type("Priority").size.should == 0
+    package.tags.type("Priority").size.should == 0
 
-    Version.make(:package => pkg,
+    FactoryGirl.create(:version, :package => package,
                  :version => "2.5",
                  :priority => "recommended",
                  :maintainer => Author.first)
 
-    pkg.tags.type("Priority").size.should == 1
-    pkg.tags.type("Priority").first.name.should == "Recommended"
+    package.tags.type("Priority").size.should == 1
+    package.tags.type("Priority").first.name.should == "Recommended"
 
-    Version.make(:package => pkg,
+    FactoryGirl.create(:version, :package => package,
                  :version => "3.0",
                  :priority => "base, recommended",
                  :maintainer => Author.first)
-    pkg.tags.type("Priority").size.should == 2
+    package.tags.type("Priority").size.should == 2
 
-    Version.make(:package => pkg,
+    FactoryGirl.create(:version, :package => package,
                  :version => "3.5",
                  :priority => "recommended",
                  :maintainer => Author.first)
 
-    pkg.tags.type("Priority").size.should == 1
-    pkg.tags.type("Priority").first.name.should == "Recommended"
+    package.tags.type("Priority").size.should == 1
+    package.tags.type("Priority").first.name.should == "Recommended"
 
     # New version w/o priority, old priority tagging should be removed
-    Version.make(:package => pkg,
+    FactoryGirl.create(:version, :package => package,
                  :version => "4.0",
                  :priority => "",
                  :maintainer => Author.first)
-    pkg.tags.type("Priority").size.should == 0
+    package.tags.type("Priority").size.should == 0
   end
 
   it "should prefer publication/package date over the regular date field" do
-    v = Version.make(:date => "2008-05-05",
-                     :maintainer => Author.first)
-    v.date.to_s.should == "2008-05-05"
-    v.update_attribute(:publicized_or_packaged, "2009-12-12")
-    v.date.to_date.to_s.should == "2009-12-12"
+    version.date = "2008-05-05"
+    version.date.to_s.should == "2008-05-05"
+    version.publicized_or_packaged = "2009-12-12"
+    version.date.to_date.to_s.should == "2009-12-12"
   end
 
   it "should parse the author list" do
-    a1 = Author.make(:name => "Ian Rush")
-    a2 = Author.make(:name => "Rob Fowler")
-    v = Version.make_unsaved(:author => "Ian Rush, Rob Fowler")
+    a1 = FactoryGirl.create(:author, :name => "Ian Rush")
+    a2 = FactoryGirl.create(:author, :name => "Rob Fowler")
+    v = FactoryGirl.build(:version, :author => "Ian Rush, Rob Fowler")
     v.parse_authors.should == [a1, a2]
 
     v.author = nil

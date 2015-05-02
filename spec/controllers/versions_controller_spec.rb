@@ -10,7 +10,7 @@ describe VersionsController do
 
   it "should have an atom feed" do
     get :feed, :format => "atom"
-    response.should have_tag('title', "New package versions on crantastic")
+    expect(response.body).to include("New package versions on crantastic")
     response.should be_success
   end
 

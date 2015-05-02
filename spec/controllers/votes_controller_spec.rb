@@ -20,8 +20,8 @@ describe VotesController do
     response.status.should == 200
     PackageUser.count.should == 2
     @user.reload
-    @user.uses?(ggplot).should be_true
-    @user.uses?(rjson).should be_true
+    @user.uses?(ggplot).should be_truthy
+    @user.uses?(rjson).should be_truthy
   end
 
 end

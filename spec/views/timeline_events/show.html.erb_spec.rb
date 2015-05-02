@@ -1,14 +1,14 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
-describe "/timeline_events/index" do
+describe "/timeline_events/show.html.erb" do
 
   before(:each) do
-    assigns[:events] = []
-    render 'timeline_events/index'
+    assign :event, FactoryGirl.build_stubbed(:timeline_event)
   end
 
   it "should have a title" do
-    response.should have_tag('h1', %r[Recent activity])
+    render
+    expect(rendered).to have_tag('h1', %r[Recent Activity])
   end
 
 end

@@ -53,28 +53,28 @@ describe Package do
     pkg = Package.find_by_param("bio.infer")
     prev_time = pkg.updated_at
     create :version, :package => pkg, :maintainer => Author.first, :version => "5.3"
-    (pkg.updated_at > prev_time).should be_true
+    (pkg.updated_at > prev_time).should be_truthy
   end
 
   it "should be marked as updated after it receives a new tagging" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
     create :tagging, :package => pkg, :user => User.first
-    (pkg.updated_at > prev_time).should be_true
+    (pkg.updated_at > prev_time).should be_truthy
   end
 
   it "should be marked as updated after it receives a new rating" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
     create :package_rating, :package => pkg, :user => User.first
-    (pkg.updated_at > prev_time).should be_true
+    (pkg.updated_at > prev_time).should be_truthy
   end
 
   it "should be marked as updated after it receives a new review" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
     create :review, :package => pkg, :version => pkg.latest, :user => User.last
-    (pkg.updated_at > prev_time).should be_true
+    (pkg.updated_at > prev_time).should be_truthy
   end
 
   it "should return the created_at timestamp if updated_at is nil" do

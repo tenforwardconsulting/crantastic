@@ -40,7 +40,7 @@ describe Author do
   end
 
   it "should be connected with versions and packages" do
-    version = create :version, :with_maintainer
+    version = create :version
     author = version.maintainer
     author.versions.should == [version]
     author.packages.should == [version.package]

@@ -1,14 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
-describe "/authors" do
-
-  before(:each) do
-  end
+describe "/authors/index.html.erb" do
 
   it "should display the number of package maintainers" do
-    assigns[:authors] = [ Author.make, Author.make ]
-    render 'authors/index'
-    response.should have_tag('p', %r[There are 2 package maintainers on crantastic])
+    assign(:authors, FactoryGirl.build_list(:author, 2))
+    render
+    expect(rendered).to have_tag('p', %r[There are 2 package maintainers on crantastic])
   end
 
 end

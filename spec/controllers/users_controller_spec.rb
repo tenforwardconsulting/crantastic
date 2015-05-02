@@ -14,12 +14,12 @@ describe UsersController do
   it "should have a atom feed for user activity" do
     User.should_receive(:find).twice.with("2").and_return(stub_model(User))
     get :show, :id => "2", :format => "atom"
-    response.status.should == 200
+    expect(response.status).to eq(200)
   end
 
   it "should do a 404 for unknown users" do
     get :show, :id => 9999
-    response.status.should == 404
+    expect(response.status).to eq(404)
   end
 
   it "should render the signup page successfully" do
@@ -31,14 +31,13 @@ describe UsersController do
   it "should require no user for the signup page" do
     login_as_user
     get :new
-    response.should_not render_template
+    response.should_not render_template(:new)
     response.should be_redirect
   end
 
   it "should require no user for the thanks page" do
     login_as_user
     get :thanks
-    response.should_not render_template
     response.should be_redirect
   end
 
@@ -46,7 +45,6 @@ describe UsersController do
 
     it "should require login for the edit page" do
       get :edit, :id => "74"
-      response.should_not render_template
       response.should be_redirect
     end
 

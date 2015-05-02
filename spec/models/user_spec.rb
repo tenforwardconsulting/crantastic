@@ -57,10 +57,10 @@ describe User do
     u = User.first
     pkg = Package.first
     a = Author.first
-    u.author_of?(pkg).should be_false
+    u.author_of?(pkg).should be_falsey
     u.author_identities << AuthorIdentity.new(:author => a)
     u.reload
-    u.author_of?(pkg).should be_true
+    u.author_of?(pkg).should be_truthy
   end
 
   describe "Package voting" do
@@ -69,48 +69,23 @@ describe User do
       u = User.first
       pkg = Package.first
 
-      u.uses?(pkg).should be_false
+      u.uses?(pkg).should be_falsey
       PackageUser.create!(:package => pkg, :user => u)
-      u.uses?(pkg).should be_true
+      u.uses?(pkg).should be_truthy
     end
 
     it "should toggle votes for a package" do
       u = User.first
       pkg = Package.first
 
-      u.toggle_usage(pkg).should be_true
-      u.uses?(pkg).should be_true
-      u.toggle_usage(pkg).should be_false
-      u.uses?(pkg).should be_false
-      u.toggle_usage(pkg).should be_true
-      u.uses?(pkg).should be_true
+      u.toggle_usage(pkg).should be_truthy
+      u.uses?(pkg).should be_truthy
+      u.toggle_usage(pkg).should be_falsey
+      u.uses?(pkg).should be_falsey
+      u.toggle_usage(pkg).should be_truthy
+      u.uses?(pkg).should be_truthy
     end
 
-  end
-
-end
-
-describe UserMailer do
-
-  before(:each) do
-    @user = User.create(:login => "Helene", :email => "helene@helene.no",
-                        :password => "1234", :password_confirmation => "1234",
-                        :tos => true)
-  end
-
-  describe "when sending an e-mail" do
-    before(:each) do
-      @email = UserMailer.create_activation_instructions(@user)
-    end
-
-    it "should be sent to the user's email address" do
-      @email.to.should == [@user.email]
-    end
-
-    it "should include an activation link" do
-      # localhost for test environment, crantastic.org for production
-      @email.body.match(" http://localhost:3000/activate/#{@user.perishable_token} ").should_not be_nil
-    end
   end
 
 end

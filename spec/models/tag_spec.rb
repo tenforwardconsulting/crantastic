@@ -46,7 +46,7 @@ describe Tag do
     create :tagging, :package => Package.find_by_param("ggplot2"),
                     :user => User.first,
                     :tag => tag
-    (tag.updated_at > prev_time).should be_true
+    (tag.updated_at > prev_time).should be_truthy
   end
 
   describe TaskView do

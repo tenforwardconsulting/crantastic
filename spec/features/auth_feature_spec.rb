@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature "Authentication" do
+  let(:email) { double("a mailer") }
 
   it "should sign up users with valid credentials" do
     visit signup_url
@@ -9,7 +10,8 @@ feature "Authentication" do
     fill_in "Password", :with => "test"
     fill_in "Confirm password", :with => "test"
     check "user_tos"
-    UserMailer.should_receive(:deliver_activation_instructions)
+    UserMailer.should_receive(:activation_instructions).and_return(email)
+    expect(email).to receive(:deliver)
     click_button "Sign up"
     expect(page).to have_content "Thanks for signing up."
     expect(page.current_path).to eq thanks_path
@@ -22,7 +24,8 @@ feature "Authentication" do
   end
 
   it "should be possible for the user to activate his account" do
-    UserMailer.should_receive(:deliver_activation_confirmation)
+    UserMailer.should_receive(:activation_confirmation).and_return(email)
+    expect(email).to receive(:deliver)
     visit activate_url(create(:user).perishable_token)
     expect(page).to have_content "Signup complete! You're now logged in and can start reviewing and tagging."
   end
@@ -37,15 +40,15 @@ feature "Authentication" do
 
   describe "activated user" do
     before(:each) do
-      create(:user, login: 'john').activate
+      create(:user, login: 'john', password: 'test').activate
       create :version
     end
 
     it "should login an activated user with valid credentials" do
       login_with_valid_credentials
-      assert_contain "Logged in successfully"
-      response.should have_selector("h1", "john")
-      response.should have_selector("a", "Edit your details")
+      expect(page).to have_text("Logged in successfully")
+      expect(page).to have_selector("h1", "john")
+      expect(page).to have_selector("a", "Edit your details")
     end
 
     it "should redirect to the intended page after login" do
@@ -53,7 +56,7 @@ feature "Authentication" do
       click_link "Write one now"
       expect(page.current_path).to eq login_path
       login_with_valid_credentials
-      expect(page.current_page).to eq new_package_review_path(Package.first)
+      expect(page.current_path).to eq new_package_review_path(Package.first)
     end
 
     it "should redirect to root url after logging out" do
