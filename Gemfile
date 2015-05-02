@@ -32,18 +32,21 @@ group :development, :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'letter_opener'
   gem 'pry', '~> 0.9.12.6'
   gem 'rspec-rails', '~> 2.14'
+  gem 'rspec-html-matchers'
+  gem 'rspec-activemodel-mocks'
   gem 'test-unit'
 end
 
 group :development do
   gem 'annotate'
+  gem 'better_errors', '~> 1.1.0'
+  gem 'letter_opener'
+  gem 'quiet_assets'
   gem 'query_diet'
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'wirble'
 end
 
 group :assets do
