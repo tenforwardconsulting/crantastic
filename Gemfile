@@ -35,7 +35,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.14'
   gem 'rspec-html-matchers'
   gem 'rspec-activemodel-mocks'
-  gem 'test-unit'
 end
 
 group :development do

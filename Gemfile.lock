@@ -218,7 +218,6 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     syntax (1.2.0)
-    test-unit (2.5.5)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -279,7 +278,6 @@ DEPENDENCIES
   sass-rails
   spring
   spring-commands-rspec
-  test-unit
   therubyracer
   timeline_fu (~> 0.3.0)
   treetop-dcf (~> 0.2.1)
