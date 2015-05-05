@@ -12,7 +12,7 @@ gem 'compass-rails'
 gem 'gravtastic', '~> 2.2.0'
 gem 'haml'
 gem 'jquery-rails'
-gem 'maruku', '~> 0.6.0'
+gem 'maruku', '~> 0.6.0', :require => false
 gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~> 1.4.4'

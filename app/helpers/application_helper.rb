@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include MarkdownAdapter
 
   def error_message_for(object, field)
     return if object.errors[field].blank?
@@ -36,7 +37,7 @@ module ApplicationHelper
       content_tag("code", match.scan(%r{\+BEGIN_SRC(.+)\+END_SRC}m)[0][0],
                   :class => "prettyprint")
     end
-    sanitize(auto_link(Maruku.new(text).to_html))
+    sanitize(auto_link(markdown_html(text)))
   end
 
   def markdown_enabled_msg(extra_text=nil)
