@@ -50,7 +50,14 @@ describe User do
     u.profile = markdown
     u.save(validate: false)
     u.reload
-    u.profile_html.should == Maruku.new(markdown).to_html
+    expect(u.profile_html).to have_tag("p") do
+      with_tag("strong") do
+        with_text(/Hello/)
+      end
+      with_tag("em") do
+        with_text(/world/)
+      end
+    end
   end
 
   it "should be identified as the author of a package" do
