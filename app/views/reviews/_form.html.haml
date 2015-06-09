@@ -1,5 +1,5 @@
-= error_messages_for(:review, :object => review)
 - form_for([package, review]) do |f|
+  = render partial: 'shared/errors', locals: { model: review, model_name: 'review' }
   %p
     %label{ :for => "review_title" }
       A brief summary
