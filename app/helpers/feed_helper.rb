@@ -13,6 +13,7 @@ module FeedHelper
       end
 
       for event in @events
+        next if event.subject.nil?
         feed.entry(event) do |entry|
           event_html = timeline_event(event, false) # don't include time ago in feeds
           next if event_html.blank? # Skip e.g. double entries for new packages

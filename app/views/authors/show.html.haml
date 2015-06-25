@@ -19,6 +19,7 @@
 
 %ul
   - for version in @author.latest_versions
+    - next unless version.package
     %li
       = [package_version(version.package, version), version.title, ""].join(". ").html_safe
       = "(#{time_ago_in_words version.date} ago)" unless version.date.blank?
