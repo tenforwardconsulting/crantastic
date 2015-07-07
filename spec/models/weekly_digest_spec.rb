@@ -9,20 +9,20 @@ describe WeeklyDigest do
   end
 
   it "should have a start date" do
-    @digest.start_date.should == Date.parse("27 jul 2009") # Start of the week 31
+    expect(@digest.start_date).to eq(Date.parse("27 jul 2009")) # Start of the week 31
   end
 
   it "should have an end date" do
-    @digest.end_date.should == Date.parse("2 aug 2009") # End of the week 31
+    expect(@digest.end_date).to eq(Date.parse("2 aug 2009")) # End of the week 31
   end
 
   it "should have a title" do
-    @digest.title.should == "Weekly digest for week #31"
+    expect(@digest.title).to eq("Weekly digest for week #31")
   end
 
   it "should not have an email delivered after creation if there is no packages" do
     WeeklyDigest.first.destroy
-    DigestMailer.should_not_receive(:deliver_weekly_digest)
+    expect(DigestMailer).not_to receive(:deliver_weekly_digest)
     WeeklyDigest.create
   end
 

@@ -10,13 +10,13 @@ describe TagsController do
 
   it "should render the index successfully" do
     get :index
-    response.should be_success
-    response.should render_template(:index)
+    expect(response).to be_success
+    expect(response).to render_template(:index)
   end
 
   it "should have a atom feed for tag activity" do
     get :show, :id => @tag.name, :format => "atom"
-    response.status.should == 200
+    expect(response.status).to eq(200)
   end
 
 end

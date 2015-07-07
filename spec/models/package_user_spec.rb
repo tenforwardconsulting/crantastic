@@ -9,10 +9,10 @@ describe PackageUser do
 
   it "should have a counter cache for the number of votes" do
     p = Package.first
-    p.package_users_count.should == 0
+    expect(p.package_users_count).to eq(0)
     p.package_users << PackageUser.new(:user => User.first)
     p.reload
-    p.package_users_count.should == 1
+    expect(p.package_users_count).to eq(1)
   end
 
 end

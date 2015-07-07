@@ -15,13 +15,13 @@ describe VersionObserver do
   it "should create new timeline events" do
     pkg = create(:version).package
     v = create :version, :package => pkg, :version => "2.0"
-    TimelineEvent.should_receive(:create!)
+    expect(TimelineEvent).to receive(:create!)
     @obs.after_create(v)
   end
 
   it "should not create timeline events when there already is an event for the package release" do
     v = create :version
-    TimelineEvent.should_not_receive(:create!)
+    expect(TimelineEvent).not_to receive(:create!)
     @obs.after_create(v)
   end
 

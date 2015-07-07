@@ -6,7 +6,7 @@ describe SessionsController do
 
     it "should return status forbidden if accessing rpx_token without a token" do
       get "rpx_token"
-      response.status.should == 403
+      expect(response.status).to eq(403)
     end
 
     it "should create a user from RPXNow user data" do
@@ -17,19 +17,19 @@ describe SessionsController do
         :name => "John Doe", :username => "john",
         :email => "john@domain.com", :identifier => "abc123"
       }
-      RPXNow.should_receive(:user_data).with(token).and_return(data)
+      expect(RPXNow).to receive(:user_data).with(token).and_return(data)
 
       rpx_proxy = RPXNow::UserProxy.new(user.id)
-      rpx_proxy.should_receive(:map).with(data[:identifier])
-      user.should_receive(:rpx).and_return(rpx_proxy)
+      expect(rpx_proxy).to receive(:map).with(data[:identifier])
+      expect(user).to receive(:rpx).and_return(rpx_proxy)
 
-      User.should_receive(:find_by_email).with("john@domain.com").and_return(user)
+      expect(User).to receive(:find_by_email).with("john@domain.com").and_return(user)
 
       get :rpx_token, :token => token
 
-      flash[:notice].should == "Logged in successfully!"
-      response.should be_redirect
-      response.should redirect_to("http://test.host/users/#{user.id}")
+      expect(flash[:notice]).to eq("Logged in successfully!")
+      expect(response).to be_redirect
+      expect(response).to redirect_to("http://test.host/users/#{user.id}")
     end
 
   end

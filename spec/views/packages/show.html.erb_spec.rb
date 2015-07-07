@@ -9,9 +9,9 @@ describe "/packages/show.html.erb" do
   end
 
   before(:each) do
-    pkg.stub(:latest) { version }
-    view.stub(:current_user) { FactoryGirl.build :user }
-    view.stub(:logged_in?) { true }
+    allow(pkg).to receive(:latest) { version }
+    allow(view).to receive(:current_user) { FactoryGirl.build :user }
+    allow(view).to receive(:logged_in?) { true }
     tagging = Tagging.new
     tagging.package = pkg
     assign :package, pkg

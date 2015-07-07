@@ -17,7 +17,7 @@ describe Review do
   it "should strip title and review before validation" do
     r = Review.new(:title => " title \r\n")
     r.valid?
-    r.title.should == "title"
+    expect(r.title).to eq("title")
   end
 
   it "should store package version" do
@@ -25,7 +25,7 @@ describe Review do
     review = Review.create!(:package => pkg, :user => User.first,
                             :title => "Title", :review => "Lorem")
     review.reload
-    review.version.should == pkg.latest
+    expect(review.version).to eq(pkg.latest)
   end
 
 end

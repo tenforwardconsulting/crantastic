@@ -9,8 +9,8 @@ describe TaggingsController do
 
   it "should redirect to login when attempting to tag without logging in first" do
     get :new, :package_id => "aaMI"
-    response.should be_redirect
-    flash[:notice].should =~ /You need to log in to access this page/
+    expect(response).to be_redirect
+    expect(flash[:notice]).to match(/You need to log in to access this page/)
   end
 
   it "should allow users to delete their own taggings" do

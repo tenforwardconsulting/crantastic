@@ -38,7 +38,7 @@ describe TimelineEvent do
 
   it "should cache task view versions" do
     event = FactoryGirl.create(:task_view).update_version("2009-09-09")
-    event.cached_value.should == TaskView.first.version
+    expect(event.cached_value).to eq(TaskView.first.version)
   end
 
   {

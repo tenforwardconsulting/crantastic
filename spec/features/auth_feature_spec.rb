@@ -10,7 +10,7 @@ feature "Authentication" do
     fill_in "Password", :with => "test"
     fill_in "Confirm password", :with => "test"
     check "user_tos"
-    UserMailer.should_receive(:activation_instructions).and_return(email)
+    expect(UserMailer).to receive(:activation_instructions).and_return(email)
     expect(email).to receive(:deliver)
     click_button "Sign up"
     expect(page).to have_content "Thanks for signing up."
@@ -24,7 +24,7 @@ feature "Authentication" do
   end
 
   it "should be possible for the user to activate his account" do
-    UserMailer.should_receive(:activation_confirmation).and_return(email)
+    expect(UserMailer).to receive(:activation_confirmation).and_return(email)
     expect(email).to receive(:deliver)
     visit activate_url(create(:user).perishable_token)
     expect(page).to have_content "Signup complete! You're now logged in and can start reviewing and tagging."

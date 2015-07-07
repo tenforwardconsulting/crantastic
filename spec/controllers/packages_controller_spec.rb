@@ -52,9 +52,6 @@ describe PackagesController do
         login_as_user(:id => 1, :login => "test")
 
         package = FactoryGirl.create(:package, :name => 'aaMI')
-        controller.instance_eval do
-          current_user.should_receive(:toggle_usage).with(package).and_return(true)
-        end
 
         post :toggle_usage, :id => package.name
 
@@ -75,8 +72,9 @@ describe PackagesController do
   describe "Routes" do
 
     it "should have route helper for package usage toggle" do
-      toggle_usage_package_path(Package.new(:name => "aaMI")).should ==
+      expect(toggle_usage_package_path(Package.new(:name => "aaMI"))).to eq(
         "/packages/aaMI/toggle_usage"
+      )
     end
 
   end
@@ -86,17 +84,17 @@ describe PackagesController do
 
     it "should be valid for the index page" do
       get :index
-      response.body.strip_entities.should be_xhtml_strict
+      expect(response.body.strip_entities).to be_xhtml_strict
     end
 
     it "should be valid for the show page" do
       get :show, :id => Package.first.to_param
-      response.body.strip_entities.should be_xhtml_strict
+      expect(response.body.strip_entities).to be_xhtml_strict
     end
 
     it "should be valid for the all page" do
       get :all
-      response.body.strip_entities.should be_xhtml_strict
+      expect(response.body.strip_entities).to be_xhtml_strict
     end
 
   end

@@ -4,7 +4,7 @@ describe "/users/show.html.erb" do
   let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
-    view.stub(:current_user) { user }
+    allow(view).to receive(:current_user) { user }
     assign :user, user
     assign :events, []
   end

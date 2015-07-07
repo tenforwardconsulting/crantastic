@@ -37,12 +37,12 @@ describe AuthorsController do
 
     it "should be valid for the index page" do
       get :index
-      response.body.strip_entities.should be_xhtml_strict
+      expect(response.body.strip_entities).to be_xhtml_strict
     end
 
     it "should be valid for the show page" do
       get :show, :id => author.id
-      response.body.strip_entities.should be_xhtml_strict
+      expect(response.body.strip_entities).to be_xhtml_strict
     end
 
   end

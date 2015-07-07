@@ -11,13 +11,13 @@ describe TimelineEventsController do
   it "should set the page title" do
     get :index
     expect(response.body).to include("It's crantastic!")
-    response.should be_success
+    expect(response).to be_success
   end
 
   it "should have an atom feed" do
     get :index, :format => "atom"
     expect(response.body).to include("Latest activity on crantastic")
-    response.should be_success
+    expect(response).to be_success
   end
 
   describe "XHTML Markup" do
@@ -25,7 +25,7 @@ describe TimelineEventsController do
 
     it "should be valid for the index page" do
       get :index
-      response.body.strip_entities.should be_xhtml_strict
+      expect(response.body.strip_entities).to be_xhtml_strict
     end
 
   end

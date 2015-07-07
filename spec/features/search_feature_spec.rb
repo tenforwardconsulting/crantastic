@@ -5,7 +5,7 @@ describe "Search" do
     visit root_url
     fill_in "q", :with => "test"
 
-    Package.should_receive(:find_by_solr).and_return(nil)
+    expect(Package).to receive(:find_by_solr).and_return(nil)
     click_on "Search"
 
     expect(page).to have_selector "h1", "Search"

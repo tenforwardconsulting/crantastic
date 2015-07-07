@@ -11,7 +11,7 @@ describe VersionsController do
   it "should have an atom feed" do
     get :feed, :format => "atom"
     expect(response.body).to include("New package versions on crantastic")
-    response.should be_success
+    expect(response).to be_success
   end
 
 end

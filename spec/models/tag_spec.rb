@@ -17,27 +17,28 @@ describe Tag do
   it "should equal a tag with the same name" do
     @tag.name = "awesome"
     new_tag = Tag.new(:name => "awesome")
-    new_tag.should == @tag
+    expect(new_tag).to eq(@tag)
   end
 
   it "should return its name when to_s is called" do
     @tag.name = "cool"
-    @tag.to_s.should == "cool"
+    expect(@tag.to_s).to eq("cool")
   end
 
   it "should find or create with LIKE by name" do
-    Tag.find_or_create_with_like_by_name("tag123").should ==
+    expect(Tag.find_or_create_with_like_by_name("tag123")).to eq(
       Tag.find_or_create_with_like_by_name("TAG123")
+    )
   end
 
   it "should parse tag list" do
-    Tag.should_receive(:find_or_create_with_like_by_name).with("tag1").at_most(3).times
-    Tag.should_receive(:find_or_create_with_like_by_name).twice.with("tag2")
-    Tag.should_receive(:find_or_create_with_like_by_name).once.with("graphics-device")
-    Tag.parse_and_find_or_create("tag1 , tag2").size.should == 2
-    Tag.parse_and_find_or_create("tag1 tag2").size.should == 2
-    Tag.parse_and_find_or_create("\"graphics device\"").size.should == 1
-    Tag.parse_and_find_or_create("tag1, ").size.should == 1
+    expect(Tag).to receive(:find_or_create_with_like_by_name).with("tag1").at_most(3).times
+    expect(Tag).to receive(:find_or_create_with_like_by_name).twice.with("tag2")
+    expect(Tag).to receive(:find_or_create_with_like_by_name).once.with("graphics-device")
+    expect(Tag.parse_and_find_or_create("tag1 , tag2").size).to eq(2)
+    expect(Tag.parse_and_find_or_create("tag1 tag2").size).to eq(2)
+    expect(Tag.parse_and_find_or_create("\"graphics device\"").size).to eq(1)
+    expect(Tag.parse_and_find_or_create("tag1, ").size).to eq(1)
   end
 
   it "should be marked as updated after it receives a new tagging" do
@@ -46,16 +47,16 @@ describe Tag do
     create :tagging, :package => Package.find_by_param("ggplot2"),
                     :user => User.first,
                     :tag => tag
-    (tag.updated_at > prev_time).should be_truthy
+    expect(tag.updated_at > prev_time).to eq true
   end
 
   describe TaskView do
 
     it "should update its version and fire a timeline event" do
       t = create :task_view, :version => "2009-06-06"
-      TimelineEvent.should_receive(:create!)
+      expect(TimelineEvent).to receive(:create!)
       t.update_version("2009-07-07")
-      t.version.should == "2009-07-07"
+      expect(t.version).to eq("2009-07-07")
     end
 
   end

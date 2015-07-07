@@ -4,7 +4,7 @@ describe "reviews/show.html.haml" do
   let(:review) { FactoryGirl.create(:review, cached_rating: 4) }
 
   before(:each) do
-    view.stub(:logged_in?) { false }
+    allow(view).to receive(:logged_in?) { false }
     assign :review, review
   end
 

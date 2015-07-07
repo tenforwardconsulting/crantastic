@@ -6,7 +6,7 @@ describe UserMailer do
   describe ".activation_instructions" do
     it "should be sent to the user's email address" do
       email = UserMailer.activation_instructions(user)
-      email.to.should == [user.email]
+      expect(email.to).to eq([user.email])
     end
 
     it "includes an activation link" do
