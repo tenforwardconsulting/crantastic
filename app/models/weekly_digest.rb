@@ -1,13 +1,3 @@
-# == Schema Information
-#
-# Table name: weekly_digest
-#
-#  id         :integer(4)      not null, primary key
-#  param      :string(255)     not null
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 # Uses the created_at attribute to determine the week in question.
 # Note that the digests are quite expensive to display since there is
 # a /lot/ of SQL queries that gets executed.

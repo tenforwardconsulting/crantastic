@@ -38,7 +38,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate'
   gem 'better_errors', '~> 1.1.0'
   gem 'letter_opener'
   gem 'quiet_assets'

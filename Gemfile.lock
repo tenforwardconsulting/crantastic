@@ -29,9 +29,6 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     addressable (2.3.7)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     arel (3.0.3)
     authlogic (3.4.2)
       activerecord (>= 3.2)
@@ -240,7 +237,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate
   authlogic
   better_errors (~> 1.1.0)
   bitly (~> 0.5.3)
