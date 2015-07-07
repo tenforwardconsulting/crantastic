@@ -1,12 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe TimelineEvent do
+RSpec.describe TimelineEvent do
   let(:timeline_event) { FactoryGirl.build(:timeline_event) }
 
   #should_validate_presence_of :event_type
 
   before(:each) do
-    create :package_rating
+    FactoryGirl.create :package_rating
   end
 
   it 'has a valid factory' do

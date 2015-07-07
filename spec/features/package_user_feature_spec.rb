@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Package users" do
-  let!(:user) { create(:user, login: 'john', password: "test") }
-  let!(:version) { create(:version) }
+RSpec.describe "Package users" do
+  let!(:user) { FactoryGirl.create(:user, login: 'john', password: "test") }
+  let!(:version) { FactoryGirl.create(:version) }
   let!(:package) { version.package }
 
 

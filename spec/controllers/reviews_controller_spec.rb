@@ -1,12 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
 include AuthHelper
 
-describe ReviewsController do
+RSpec.describe ReviewsController do
 
   before(:each) do
-    create :version
-    create :review, package: Package.first
+    FactoryGirl.create :version
+    FactoryGirl.create :review, package: Package.first
   end
 
   it "should render the index successfully" do

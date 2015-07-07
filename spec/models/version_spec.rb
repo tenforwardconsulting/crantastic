@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Version do
+RSpec.describe Version do
 
   let(:version) { FactoryGirl.build_stubbed :version }
   let(:author) { FactoryGirl.build_stubbed :author }

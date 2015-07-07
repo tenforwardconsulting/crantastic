@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe VersionsController do
+RSpec.describe VersionsController do
 
   before(:each) do
-    create :version, package: create(:package, name: 'rJython')
+    FactoryGirl.create :version, package: FactoryGirl.create(:package, name: 'rJython')
   end
 
   render_views

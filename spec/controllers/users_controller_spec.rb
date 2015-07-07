@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 include AuthHelper
 
-describe UsersController do
+RSpec.describe UsersController do
 
   render_views
 

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Search" do
+RSpec.describe "Search" do
   it "should show search results" do
     visit root_url
     fill_in "q", :with => "test"

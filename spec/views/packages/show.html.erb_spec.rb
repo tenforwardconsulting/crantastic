@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "/packages/show.html.erb" do
+RSpec.describe "/packages/show.html.erb" do
 
   let(:version) { FactoryGirl.build_stubbed :version }
   let(:pkg) { version.package }

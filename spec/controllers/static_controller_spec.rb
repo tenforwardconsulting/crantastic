@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe StaticController do
+RSpec.describe StaticController do
 
   render_views
 

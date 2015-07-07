@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "search/show.html.haml" do
+RSpec.describe "search/show.html.haml" do
   before(:each) do
   end
 

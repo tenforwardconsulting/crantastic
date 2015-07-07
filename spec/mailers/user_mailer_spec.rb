@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe UserMailer do
+RSpec.describe UserMailer do
   let(:user) { FactoryGirl.create(:user) }
 
   describe ".activation_instructions" do

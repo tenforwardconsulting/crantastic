@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 include AuthHelper
 
-describe RatingsController do
+RSpec.describe RatingsController do
 
   it "should require login" do
     post :create, :package_id => "aaMI"

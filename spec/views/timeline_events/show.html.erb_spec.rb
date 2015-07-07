@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "/timeline_events/show.html.erb" do
+RSpec.describe "/timeline_events/show.html.erb" do
 
   before(:each) do
     assign :event, FactoryGirl.build_stubbed(:timeline_event)

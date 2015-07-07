@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SessionsController do
+RSpec.describe SessionsController do
 
   describe "RPX Now integration" do
 
@@ -10,7 +10,7 @@ describe SessionsController do
     end
 
     it "should create a user from RPXNow user data" do
-      create(:user, email: 'john@domain.com').activate
+      FactoryGirl.create(:user, email: 'john@domain.com').activate
       user = User.find_by_email("john@domain.com")
       token = "asdfasdf1231231ij"
       data = {

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Author do
+RSpec.describe Author do
 
   #should_allow_values_for :name, "John Doe", :allow_nil => false
   #should_validate_length_of :name, :minimum => 2, :maximum => 255
@@ -32,15 +32,15 @@ describe Author do
   end
 
   it "should find or create" do
-    john = create :author, name: 'John', email: nil
-    harry = create :author, name: 'Harry'
+    john = FactoryGirl.create :author, name: 'John', email: nil
+    harry = FactoryGirl.create :author, name: 'Harry'
 
     expect(Author.find_or_create("Harry", nil)).to eq(harry)
     expect(Author.find_or_create(nil, harry.email)).to eq(harry)
   end
 
   it "should be connected with versions and packages" do
-    version = create :version
+    version = FactoryGirl.create :version
     author = version.maintainer
     expect(author.versions).to eq([version])
     expect(author.packages).to eq([version.package])

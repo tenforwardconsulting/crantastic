@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe TimelineEventsController do
+RSpec.describe TimelineEventsController do
 
   before(:each) do
     FactoryGirl.create :timeline_event_for_version

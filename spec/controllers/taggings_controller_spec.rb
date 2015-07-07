@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe TaggingsController do
+RSpec.describe TaggingsController do
 
   include AuthHelper
 
-  let(:tagging) { create :tagging, :with_package }
-  let(:user) { create :user, login: 'malicious' }
+  let(:tagging) { FactoryGirl.create :tagging, :with_package }
+  let(:user) { FactoryGirl.create :user, login: 'malicious' }
 
   it "should redirect to login when attempting to tag without logging in first" do
     get :new, :package_id => "aaMI"

@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe PackageUser do
+RSpec.describe PackageUser do
 
   before(:each) do
-    create :package
-    create :user
+    FactoryGirl.create :package
+    FactoryGirl.create :user
   end
 
   it "should have a counter cache for the number of votes" do

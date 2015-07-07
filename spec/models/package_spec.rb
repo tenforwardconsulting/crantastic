@@ -1,14 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Package do
+RSpec.describe Package do
 
   before(:each) do
-    create_list :user, 2
+    FactoryGirl.create_list :user, 2
 
-    bio_infer_package = create :package, name: 'bio.infer', updated_at: 1.day.ago
-    ggplot_package = create :package, name: 'ggplot2', updated_at: 2.days.ago
-    create :version, package: bio_infer_package, maintainer: create(:author)
-    create :version, package: ggplot_package, maintainer: create(:author)
+    bio_infer_package = FactoryGirl.create :package, name: 'bio.infer', updated_at: 1.day.ago
+    ggplot_package = FactoryGirl.create :package, name: 'ggplot2', updated_at: 2.days.ago
+    FactoryGirl.create :version, package: bio_infer_package, maintainer: FactoryGirl.create(:author)
+    FactoryGirl.create :version, package: ggplot_package, maintainer: FactoryGirl.create(:author)
     @pkg = Package.first
   end
 
@@ -52,33 +52,33 @@ describe Package do
   it "should be marked as updated after it receives a new version" do
     pkg = Package.find_by_param("bio.infer")
     prev_time = pkg.updated_at
-    create :version, :package => pkg, :maintainer => Author.first, :version => "5.3"
+    FactoryGirl.create :version, :package => pkg, :maintainer => Author.first, :version => "5.3"
     expect(pkg.updated_at > prev_time).to eq true
   end
 
   it "should be marked as updated after it receives a new tagging" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
-    create :tagging, :package => pkg, :user => User.first
+    FactoryGirl.create :tagging, :package => pkg, :user => User.first
     expect(pkg.updated_at > prev_time).to eq true
   end
 
   it "should be marked as updated after it receives a new rating" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
-    create :package_rating, :package => pkg, :user => User.first
+    FactoryGirl.create :package_rating, :package => pkg, :user => User.first
     expect(pkg.updated_at > prev_time).to eq true
   end
 
   it "should be marked as updated after it receives a new review" do
     pkg = Package.find_by_param("ggplot2")
     prev_time = pkg.updated_at
-    create :review, :package => pkg, :version => pkg.latest, :user => User.last
+    FactoryGirl.create :review, :package => pkg, :version => pkg.latest, :user => User.last
     expect(pkg.updated_at > prev_time).to eq true
   end
 
   it "should return the created_at timestamp if updated_at is nil" do
-    pkg = create :package
+    pkg = FactoryGirl.create :package
     expect(pkg.updated_at).to eq(pkg.created_at)
     sql = "UPDATE package SET updated_at = NULL where id = #{pkg.id}"
     ActiveRecord::Base.connection.execute(sql)
@@ -120,9 +120,9 @@ describe Package do
       expect(p.documentation_package_ratings.count).to eq(0)
     end
 
-    it "should discard old ratings" do
+    it "discards old ratings" do
       u = User.first
-      p = create :package
+      p = FactoryGirl.create :package
 
       u.rate!(p, 1)
       r1 = u.rating_for(p)

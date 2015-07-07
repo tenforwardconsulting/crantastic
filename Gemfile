@@ -32,7 +32,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'pry', '~> 0.9.12.6'
-  gem 'rspec-rails', '~> 2.14'
+  gem 'rspec-rails', '~> 3.0'
   gem 'rspec-html-matchers'
   gem 'rspec-activemodel-mocks'
 end

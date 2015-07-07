@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "/users/show.html.erb" do
+RSpec.describe "/users/show.html.erb" do
   let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
-    allow(view).to receive(:current_user) { user }
+    allow(view).to receive(:current_user).and_return(user)
     assign :user, user
     assign :events, []
   end

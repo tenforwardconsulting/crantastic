@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "reviews/show.html.haml" do
+RSpec.describe "reviews/show.html.haml" do
   let(:review) { FactoryGirl.create(:review, cached_rating: 4) }
 
   before(:each) do

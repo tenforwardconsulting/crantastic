@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__) + "/../../lib/cran.rb")
 
-describe CRAN::TaskView do
+RSpec.describe CRAN::TaskView do
 
   before(:each) do
     @data = File.read(File.join(File.dirname(__FILE__) + "/data/Bayesian.ctv"))
@@ -19,7 +19,7 @@ describe CRAN::TaskView do
 end
 
 
-describe CRAN::TaskViews do
+RSpec.describe CRAN::TaskViews do
 
   before(:each) do
     @data = File.read(File.join(File.dirname(__FILE__) + "/data/index.html"))

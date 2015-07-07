@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe AuthorsController do
+RSpec.describe AuthorsController do
   let(:version) { FactoryGirl.create :version }
   let(:author) { version.maintainer }
 

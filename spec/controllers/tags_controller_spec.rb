@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 include AuthHelper
 
-describe TagsController do
+RSpec.describe TagsController do
 
   before(:each) do
-    @tag = create :tag
+    @tag = FactoryGirl.create :tag
   end
 
   it "should render the index successfully" do

@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe User do
+RSpec.describe User do
 
   before(:each) do
-    create :user
-    create :version
+    FactoryGirl.create :user
+    FactoryGirl.create :version
   end
 
   it "accounts created with rpx should be valid even if they have blank password" do

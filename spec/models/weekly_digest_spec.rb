@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe WeeklyDigest do
+RSpec.describe WeeklyDigest do
 
   before(:each) do
     wd = WeeklyDigest.create
@@ -22,7 +22,7 @@ describe WeeklyDigest do
 
   it "should not have an email delivered after creation if there is no packages" do
     WeeklyDigest.first.destroy
-    expect(DigestMailer).not_to receive(:deliver_weekly_digest)
+    expect(DigestMailer).not_to receive(:weekly_digest)
     WeeklyDigest.create
   end
 

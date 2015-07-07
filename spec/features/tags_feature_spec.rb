@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Tags" do
-   let!(:user) { create(:user, :login => "john", :password => 'password') }
+RSpec.describe "Tags" do
+  let!(:user) { FactoryGirl.create(:user, :login => "john", :password => 'password') }
 
 
   before(:each) do
-    create :version
+    FactoryGirl.create :version
     user.activate
     visit package_url(Package.first)
     click_on "Add tags"

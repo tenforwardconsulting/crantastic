@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SearchController do
+RSpec.describe SearchController do
 
   describe "GET 'show'" do
     it "should be successful" do

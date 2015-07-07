@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ApplicationHelper do
+RSpec.describe ApplicationHelper do
 
   it "should have a clear div helper" do
     expect(helper.clear_div).to eq(%{<div class="clear"></div>})

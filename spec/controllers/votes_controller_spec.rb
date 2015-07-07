@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe VotesController do
+RSpec.describe VotesController do
 
   before(:each) do
-    create(:user).activate
+    FactoryGirl.create(:user).activate
     @user = User.first
   end
 
@@ -13,8 +13,8 @@ describe VotesController do
   end
 
   it "should create new package votes" do
-    ggplot = create :package, name: 'ggplot'
-    rjson  = create :package, name: 'rjson'
+    ggplot = FactoryGirl.create :package, name: 'ggplot'
+    rjson  = FactoryGirl.create :package, name: 'rjson'
     post :create, :packages => "ggplot,rjson", :user_credentials => @user.single_access_token
     expect(response).not_to be_redirect
     expect(response.status).to eq(200)

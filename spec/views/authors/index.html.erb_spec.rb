@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "/authors/index.html.erb" do
+RSpec.describe "/authors/index.html.erb" do
 
   it "should display the number of package maintainers" do
     assign(:authors, FactoryGirl.build_list(:author, 2))

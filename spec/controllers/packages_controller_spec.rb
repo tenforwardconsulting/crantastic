@@ -1,12 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
 include AuthHelper
 
-describe PackagesController do
+RSpec.describe PackagesController do
 
   before(:each) do
-    create :version, package: create(:package, name: 'rJython')
-    create :version, package: create(:package, name: 'data.table')
+    FactoryGirl.create :version, package: FactoryGirl.create(:package, name: 'rJython')
+    FactoryGirl.create :version, package: FactoryGirl.create(:package, name: 'data.table')
   end
 
   render_views

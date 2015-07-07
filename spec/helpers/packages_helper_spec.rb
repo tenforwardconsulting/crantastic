@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe PackagesHelper do
+RSpec.describe PackagesHelper do
 
   before(:each) do
     @pkg = Package.new

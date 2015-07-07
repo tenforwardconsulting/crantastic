@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature "Authentication" do
+RSpec.feature "Authentication" do
   let(:email) { double("a mailer") }
 
   it "should sign up users with valid credentials" do
@@ -18,7 +18,7 @@ feature "Authentication" do
   end
 
   it "should not login the user before activation" do
-    create :user, login: 'john'
+    FactoryGirl.create :user, login: 'john'
     login_with_valid_credentials
     expect(page).to have_content "Invalid user name or password."
   end
@@ -26,7 +26,7 @@ feature "Authentication" do
   it "should be possible for the user to activate his account" do
     expect(UserMailer).to receive(:activation_confirmation).and_return(email)
     expect(email).to receive(:deliver)
-    visit activate_url(create(:user).perishable_token)
+    visit activate_url(FactoryGirl.create(:user).perishable_token)
     expect(page).to have_content "Signup complete! You're now logged in and can start reviewing and tagging."
   end
 
@@ -40,8 +40,8 @@ feature "Authentication" do
 
   describe "activated user" do
     before(:each) do
-      create(:user, login: 'john', password: 'test').activate
-      create :version
+      FactoryGirl.create(:user, login: 'john', password: 'test').activate
+      FactoryGirl.create :version
     end
 
     it "should login an activated user with valid credentials" do

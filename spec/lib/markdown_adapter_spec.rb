@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe MarkdownAdapter do
+RSpec.describe MarkdownAdapter do
   subject { Class.new { extend MarkdownAdapter } }
 
   describe '.markdown_html' do

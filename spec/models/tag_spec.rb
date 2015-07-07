@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Tag do
+RSpec.describe Tag do
 
   before(:each) do
-    create :tagging
-    create :package, :name => 'ggplot2'
+    FactoryGirl.create :tagging
+    FactoryGirl.create :package, :name => 'ggplot2'
     @tag = Tag.new
   end
 
@@ -42,9 +42,9 @@ describe Tag do
   end
 
   it "should be marked as updated after it receives a new tagging" do
-    tag = create :tag
+    tag = FactoryGirl.create :tag
     prev_time = tag.updated_at
-    create :tagging, :package => Package.find_by_param("ggplot2"),
+    FactoryGirl.create :tagging, :package => Package.find_by_param("ggplot2"),
                     :user => User.first,
                     :tag => tag
     expect(tag.updated_at > prev_time).to eq true
@@ -53,7 +53,7 @@ describe Tag do
   describe TaskView do
 
     it "should update its version and fire a timeline event" do
-      t = create :task_view, :version => "2009-06-06"
+      t = FactoryGirl.create :task_view, :version => "2009-06-06"
       expect(TimelineEvent).to receive(:create!)
       t.update_version("2009-07-07")
       expect(t.version).to eq("2009-07-07")

@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe PackageRating do
+RSpec.describe PackageRating do
   before(:each) do
     @valid_attributes = {
-      :user => create(:user),
-      :package => create(:package),
+      :user => FactoryGirl.create(:user),
+      :package => FactoryGirl.create(:package),
       :rating => 2
     }
   end
