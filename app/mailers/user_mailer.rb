@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
   default from: 'info@crantastic.org'
-  default_url_options[:host] = APP_CONFIG[:site_domain]
+  default_url_options[:host] = ENV['SITE_DOMAIN']
 
   def activation_instructions(user)
     @user = user
