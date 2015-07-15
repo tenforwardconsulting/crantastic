@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe VersionObserver do
+RSpec.describe VersionObserver do
 
   before(:each) do
     Version.observers.disable VersionObserver
@@ -12,16 +12,16 @@ describe VersionObserver do
     Version.observers.enable VersionObserver
   end
 
-  it "should create new timeline events" do
-    pkg = create(:version).package
-    v = create :version, :package => pkg, :version => "2.0"
-    TimelineEvent.should_receive(:create!)
+  it "creates new timeline events" do
+    pkg = FactoryGirl.create(:version).package
+    v = FactoryGirl.create :version, :package => pkg, :version => "2.0"
+    expect(TimelineEvent).to receive(:create!)
     @obs.after_create(v)
   end
 
-  it "should not create timeline events when there already is an event for the package release" do
-    v = create :version
-    TimelineEvent.should_not_receive(:create!)
+  it "does not create timeline events when there already is an event for the package release" do
+    v = FactoryGirl.create :version
+    expect(TimelineEvent).not_to receive(:create!)
     @obs.after_create(v)
   end
 

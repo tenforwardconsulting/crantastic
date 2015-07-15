@@ -1,17 +1,19 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Tags" do
+RSpec.describe "Tags" do
+  let!(:user) { FactoryGirl.create(:user, :login => "john", :password => 'password') }
+
 
   before(:each) do
-    create :version
-    create(:user, login: 'john').activate
+    FactoryGirl.create :version
+    user.activate
     visit package_url(Package.first)
     click_on "Add tags"
   end
 
   it "should add tags to a package" do
     expect(page.current_path).to eq login_path
-    login_with_valid_credentials
+    login_with_valid_credentials(user.login, user.password)
     expect(page.current_path).to eq new_package_tagging_path(Package.first)
 
     fill_in "tag_name", :with => "test"
@@ -24,7 +26,7 @@ describe "Tags" do
 
   describe "as a logged in user" do
     before(:each) do
-      login_with_valid_credentials
+      login_with_valid_credentials(user.login, user.password)
     end
 
     it "should add multiple tags to a package" do

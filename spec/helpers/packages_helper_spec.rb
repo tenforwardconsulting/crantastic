@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe PackagesHelper do
+RSpec.describe PackagesHelper do
 
   before(:each) do
     @pkg = Package.new
@@ -9,14 +9,14 @@ describe PackagesHelper do
   describe "rating helper" do
 
     it "should return blank if no ratings" do
-      @pkg.stub(:rating_count).and_return(0)
-      helper.rating(@pkg).should == ""
+      allow(@pkg).to receive(:rating_count).and_return(0)
+      expect(helper.rating(@pkg)).to eq("")
     end
 
     it "should return the avg if there are ratings" do
-      @pkg.stub(:rating_count).and_return(2)
-      @pkg.stub(:average_rating).and_return(4)
-      helper.rating(@pkg).should == "4.0/5"
+      allow(@pkg).to receive(:rating_count).and_return(2)
+      allow(@pkg).to receive(:average_rating).and_return(4)
+      expect(helper.rating(@pkg)).to eq("4.0/5")
     end
 
   end

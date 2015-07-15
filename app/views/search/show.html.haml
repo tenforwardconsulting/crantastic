@@ -1,7 +1,7 @@
 %h1
   Search
 
-- if @results.empty?
+- if @results.blank?
   %p Sorry, no results were found. Please try another search query.
 - else
   %ol#search-results= render :partial => "result", :collection => @results, :locals => { :search_term => @search_term }

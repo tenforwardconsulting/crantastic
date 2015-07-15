@@ -1,8 +1,11 @@
 FactoryGirl.define do
+  sequence :name do |n|
+    "some_name#{n}"
+  end
   factory :version do
-    version { Faker::Lorem.word }
-    name { Faker::Lorem.word }
+    version {generate(:name) }
+    name { generate(:name) }
     package
-    maintainer { FactoryGirl.create :author }
+    association :maintainer, factory: :author
   end
 end

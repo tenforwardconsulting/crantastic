@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__) + "/../../lib/cran.rb")
 
-describe CRAN::TaskView do
+RSpec.describe CRAN::TaskView do
 
   before(:each) do
     @data = File.read(File.join(File.dirname(__FILE__) + "/data/Bayesian.ctv"))
@@ -8,18 +8,18 @@ describe CRAN::TaskView do
 
   it "should parse a ctv file" do
     tv = CRAN::TaskView.new(@data)
-    tv.name.should == "Bayesian"
-    tv.topic.should == "Bayesian Inference"
-    tv.version.should == "2009-06-11"
-    tv.packagelist.size.should == 62
-    tv.packagelist[0].should == "AdMit"
-    tv.packagelist[1].should == "arm"
+    expect(tv.name).to eq("Bayesian")
+    expect(tv.topic).to eq("Bayesian Inference")
+    expect(tv.version).to eq("2009-06-11")
+    expect(tv.packagelist.size).to eq(62)
+    expect(tv.packagelist[0]).to eq("AdMit")
+    expect(tv.packagelist[1]).to eq("arm")
   end
 
 end
 
 
-describe CRAN::TaskViews do
+RSpec.describe CRAN::TaskViews do
 
   before(:each) do
     @data = File.read(File.join(File.dirname(__FILE__) + "/data/index.html"))
@@ -27,9 +27,9 @@ describe CRAN::TaskViews do
 
   it "should parse the view list" do
     views = CRAN::TaskViews.new(@data)
-    views.size.should == 24
-    views[0].should == "Bayesian"
-    views[23].should == "TimeSeries"
+    expect(views.size).to eq(24)
+    expect(views[0]).to eq("Bayesian")
+    expect(views[23]).to eq("TimeSeries")
   end
 
 end

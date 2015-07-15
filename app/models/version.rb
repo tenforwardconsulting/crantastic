@@ -50,35 +50,6 @@ class Version < ActiveRecord::Base
     author
   end
 
-  # For now this just stores changes from the previous version
-  def serialize_data
-    return unless self.version_changes.nil? && previous
-
-    db = CouchRest.database("http://208.78.99.54:5984/packages")
-    current = db.get(vname)
-    prev = db.get(previous.vname)
-
-    current_functions = current["function_hashes"].keys
-    prev_functions = prev["function_hashes"].keys
-
-    changes = {}
-    changes[:removed] = (prev_functions - current_functions).sort
-    changes[:added]   = (current_functions - prev_functions).sort
-    changes[:changed] = []
-
-    current_functions.each do |f|
-      changes[:changed] << f if current["function_hashes"][f] != prev["function_hashes"][f]
-    end
-    changes[:changed].sort!
-
-    self.version_changes = changes
-
-  rescue RestClient::ResourceNotFound
-    self.version_changes = {}
-  ensure
-    save!
-  end
-
   # Prefer publication/package date over the regular date field
   # @return [Date, DateTime]
   def date

@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     c.perishable_token_valid_for = 1.day
 
     c.validates_format_of_login_field_options = {
-      :with => /^\w[\w\.\-_@]+$/,
+      :with => /^\w[\w\.\-@]+$/,
       :message => "only use letters, numbers, and .-_@ please"
     }
     c.validates_format_of_email_field_options = {
@@ -82,8 +82,12 @@ class User < ActiveRecord::Base
       r.rating = rating
       r.save
     else
-      PackageRating.create!(:package_id => package, :user_id => self.id,
-                            :rating => rating, :aspect => aspect)
+      PackageRating.new do |pr|
+        pr.package_id = package
+        pr.user_id = self.id
+        pr.rating = rating
+        pr.aspect = aspect
+      end.save!
     end
   end
 
@@ -93,12 +97,10 @@ class User < ActiveRecord::Base
   # @param [String] aspect "general" or "documentation"
   # @return [PackageRating] The PackageRating object
   def rating_for(package_id, aspect="overall")
-    PackageRating.find(:first,
-                       :conditions => {
-                         :package_id => package_id,
-                         :user_id => self.id,
-                         :aspect => aspect
-                       })
+    PackageRating.where(:package_id => package_id,
+                        :user_id => self.id,
+                        :aspect => aspect
+                       ).first
   end
 
   # Toggle this users usage status for a given package. Creates a new vote or

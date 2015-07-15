@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SearchController do
+RSpec.describe SearchController do
 
   describe "GET 'show'" do
     it "should be successful" do
       get 'show'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 end

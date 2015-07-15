@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe VersionsHelper do
+RSpec.describe VersionsHelper do
 
   it "should give a message for versions that dont use any packages" do
-    assign :version, build_stubbed(:version, imports: '', suggests: '')
-    helper.version_uses.should == "Does not use any package"
+    assign :version, FactoryGirl.build_stubbed(:version, imports: '', suggests: '')
+    expect(helper.version_uses).to eq("Does not use any package")
   end
 
 end

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Author do
+RSpec.describe Author do
 
   #should_allow_values_for :name, "John Doe", :allow_nil => false
   #should_validate_length_of :name, :minimum => 2, :maximum => 255
@@ -14,36 +14,36 @@ describe Author do
   end
 
   it "creates new from string" do
-    Author.should_receive(:find_or_create_by_name).with("Unknown")
+    expect(Author).to receive(:find_or_create_by_name).with("Unknown")
     Author.new_from_string("")
 
-    Author.should_receive(:find_or_create).with("John Doe", nil)
+    expect(Author).to receive(:find_or_create).with("John Doe", nil)
     Author.new_from_string("John Doe")
 
-    Author.should_receive(:find_or_create_by_name).with("Unknown")
+    expect(Author).to receive(:find_or_create_by_name).with("Unknown")
     Author.new_from_string("john@doe.com")
 
-    Author.should_receive(:find_or_create).with("John Doe", "john@doe.com")
+    expect(Author).to receive(:find_or_create).with("John Doe", "john@doe.com")
     Author.new_from_string("John Doe <john@doe.com>")
   end
 
   it "has a string representation" do
-    Author.new(:name => "John").to_s.should == "John"
+    expect(Author.new(:name => "John").to_s).to eq("John")
   end
 
   it "should find or create" do
-    john = create :author, name: 'John', email: nil
-    harry = create :author, name: 'Harry'
+    john = FactoryGirl.create :author, name: 'John', email: nil
+    harry = FactoryGirl.create :author, name: 'Harry'
 
-    Author.find_or_create("Harry", nil).should == harry
-    Author.find_or_create(nil, harry.email).should == harry
+    expect(Author.find_or_create("Harry", nil)).to eq(harry)
+    expect(Author.find_or_create(nil, harry.email)).to eq(harry)
   end
 
   it "should be connected with versions and packages" do
-    version = create :version, :with_maintainer
+    version = FactoryGirl.create :version
     author = version.maintainer
-    author.versions.should == [version]
-    author.packages.should == [version.package]
+    expect(author.versions).to eq([version])
+    expect(author.packages).to eq([version.package])
   end
 
 end

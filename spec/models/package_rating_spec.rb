@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe PackageRating do
+RSpec.describe PackageRating do
   before(:each) do
     @valid_attributes = {
-      :user => create(:user),
-      :package => create(:package),
+      :user => FactoryGirl.create(:user),
+      :package => FactoryGirl.create(:package),
       :rating => 2
     }
   end
@@ -17,16 +17,16 @@ describe PackageRating do
   end
 
   it "shouldn't be possible for a user to have two active votes for one package" do
-    PackageRating.create(@valid_attributes).should be_valid
-    PackageRating.create(@valid_attributes).should_not be_valid
+    expect(PackageRating.create(@valid_attributes)).to be_valid
+    expect(PackageRating.create(@valid_attributes)).not_to be_valid
   end
 
   it "should be possible for a user to have two active votes for one package with different aspects" do
-    PackageRating.create(@valid_attributes).should be_valid
-    PackageRating.create(@valid_attributes.merge(:aspect => "documentation")).should be_valid
+    expect(PackageRating.create(@valid_attributes)).to be_valid
+    expect(PackageRating.create(@valid_attributes.merge(:aspect => "documentation"))).to be_valid
   end
 
   it "should have a default rating aspect" do
-    PackageRating.create!(@valid_attributes).aspect.should == "overall"
+    expect(PackageRating.create!(@valid_attributes).aspect).to eq("overall")
   end
 end

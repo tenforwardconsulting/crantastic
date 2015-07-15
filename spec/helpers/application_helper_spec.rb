@@ -1,19 +1,19 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ApplicationHelper do
+RSpec.describe ApplicationHelper do
 
   it "should have a clear div helper" do
-    helper.clear_div.should == %{<div class="clear"></div>}
+    expect(helper.clear_div).to eq(%{<div class="clear"></div>})
   end
 
   it "should have a title helper that figures out if the title is plural or not" do
-    helper.title.should == "It's crantastic!" # The default title
+    expect(helper.title).to eq("It's crantastic!") # The default title
 
     assign :title, 'Welcome'
-    helper.title.should == "Welcome. It's crantastic!"
+    expect(helper.title).to eq("Welcome. It's crantastic!")
 
     assign :title, 'Tags'
-    helper.title.should == "Tags. They're crantastic!"
+    expect(helper.title).to eq("Tags. They're crantastic!")
   end
 
 end
