@@ -60,6 +60,7 @@ class SessionsController < ApplicationController
   def create
     session = UserSession.new(:login => params[:login],
                               :password => params[:password])
+
     if session.save
       if current_user.remember?
         session.remember_me = true
@@ -68,7 +69,7 @@ class SessionsController < ApplicationController
       redirect_back_or_default(user_url(current_user))
       flash[:notice] = "Logged in successfully"
     else
-      flash[:notice] = "Invalid user name or password. Maybe you meant to <a href=\"/signup/\">sign up</a> instead?"
+      flash[:notice] = session.errors.full_messages.join('\n')
       render :action => 'new'
     end
   end

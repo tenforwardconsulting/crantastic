@@ -10,8 +10,11 @@ class PackagesController < ApplicationController
 
     # Handle nonce values, this is required for clients without JS
     if @search_term.length == 60 && @search_term[-2,2] == '=='
-      @search_term = params[params.keys.find { |i| i.length == 60 }].sub(/^==/, '')
-      params[:search] = @search_term
+      search_term = params[params.keys.find { |i| i.length == 60 }]
+      if search_term
+        @search_term = search_term.sub(/^==/, '')
+        params[:search] = @search_term
+      end
     end
 
     options = {}
