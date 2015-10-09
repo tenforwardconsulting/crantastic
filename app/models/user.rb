@@ -128,7 +128,12 @@ class User < ActiveRecord::Base
   def author_of?(pkg)
     # This could be optimized, but I think this will suffice for a while
     # since most of the time a user will only be connected with one author.
-    self.authors.collect { |a| a.packages }.flatten.uniq.include?(pkg)
+    packages = self.authors.collect { |a| a.packages }
+    if packages
+      packages.flatten.uniq.include?(pkg)
+    else
+      false
+    end
   end
 
   def deliver_activation_instructions!

@@ -11,9 +11,10 @@ module TimelineEventsHelper
 
       action("tagged") + " " +
         events.map do |e|
+          next unless e && e.subject && e.subject.tag
         link_to(e.secondary_subject, e.secondary_subject) +
           " with #{link_to(e.subject.tag, e.subject.tag)}".html_safe
-      end.to_sentence.html_safe
+      end.compact.to_sentence.html_safe
 
     when "new_package_rating" then
 
