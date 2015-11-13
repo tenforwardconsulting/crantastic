@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.21'
+gem 'rails', '3.2.22'
 
 gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
@@ -13,6 +13,7 @@ gem 'figaro'
 gem 'gravtastic', '~> 2.2.0'
 gem 'haml'
 gem 'jquery-rails'
+gem 'jefferies_tube', git: "https://github.com/tenforwardconsulting/jefferies_tube.git"
 gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~> 1.4.4'
