@@ -1,14 +1,8 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
-
-  # replaces the value to all keys matching /password/i with "[FILTERED]"
-  filter_parameter_logging :password
-
   helper :all # include all helpers, all the time
 
   include AuthenticatedSystem
+
   # Make these methods available as view helpers
   helper_method :current_user_session, :current_user, :logged_in?
 
@@ -19,11 +13,13 @@ class ApplicationController < ActionController::Base
   before_filter :correct_accept_headers
 
   protected
+
   def rescue_404
-    rescue_action_in_public ActionController::UnknownAction.new
+    render :template => 'static/error_404', status: 404
   end
 
   # Custom error processing after Hoptoad has been notified
+  # TODO Delete this? Not called anywhere
   def rescue_action_in_public_without_hoptoad(exception)
     case exception
     when ::ActionController::UnknownAction, ::ActiveRecord::RecordNotFound then
@@ -35,6 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Force local request to make sure rescue_action_in_public is triggered
+  # TODO Does this do anything
   def local_request?
     false
   end
@@ -56,7 +53,7 @@ class ApplicationController < ActionController::Base
                                  })
   end
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_404
+  rescue_from ActiveRecord::RecordNotFound, with: :rescue_404
 
   rescue_from CanCan::AccessDenied do |e|
     render :text => e.message, :status => :forbidden

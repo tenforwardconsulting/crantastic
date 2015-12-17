@@ -1,18 +1,3 @@
-# == Schema Information
-#
-# Table name: review
-#
-#  id            :integer(4)      not null, primary key
-#  package_id    :integer(4)
-#  user_id       :integer(4)
-#  review        :text
-#  title         :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  version_id    :integer(4)
-#  cached_rating :integer(4)
-#
-
 class Review < ActiveRecord::Base
 
   belongs_to :user, :touch => true
@@ -27,7 +12,7 @@ class Review < ActiveRecord::Base
                      :secondary_subject => :package
 
   default_scope :order => "created_at DESC" # Latest first
-  named_scope :recent, :limit => 10, :include => [:user, :package]
+  scope :recent, :limit => 10, :include => [:user, :package]
 
   before_validation :strip_title_and_review # NOTE: consider before_save
   before_create :cache_rating

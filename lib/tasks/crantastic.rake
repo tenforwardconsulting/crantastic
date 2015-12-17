@@ -1,3 +1,4 @@
+require 'crantastic'
 namespace :crantastic do
 
   desc "Cron task, updates package versions and task views"
@@ -11,13 +12,13 @@ namespace :crantastic do
 
     rescue OpenURI::HTTPError => e
       req_status = e.io.status[0] # 3xx, 4xx, 5xx
-      Log.log_and_report! "HTTP Error: #{req_status}"
-    rescue SocketError # timeout, etc
-      Log.log_and_report! "Socket error, check your connection"
+      Log.log_and_report! "HTTP Error: #{req_status}", e
+    rescue SocketError => e # timeout, etc
+      Log.log_and_report! "Socket error, check your connection", e
     rescue URI::InvalidURIError => e
-      Log.log_and_report! "Invalid URI Error"
+      Log.log_and_report! "Invalid URI Error", e
     rescue Exception => e
-      Log.log_and_report! e
+      Log.log_and_report! e.message, e
     end
   end
 

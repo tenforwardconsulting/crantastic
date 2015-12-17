@@ -46,7 +46,7 @@
     <td style="width: 140px;vertical-align: top;"><h3>Overall:</h3></td>
     <td style="vertical-align: top;">
       <div>
-        <% form_tag package_ratings_path(@package) do -%>
+        <%= form_tag package_ratings_path(@package) do -%>
           <%= select_rating %>
         <% end %>
       </div>&nbsp;
@@ -67,7 +67,7 @@
     <td style="width: 140px;vertical-align: top;"><h3>Documentation:</h3></td>
     <td style="vertical-align: top;">
       <div>
-        <% form_tag package_ratings_path(@package) do -%>
+        <%= form_tag package_ratings_path(@package) do -%>
           <%= select_rating("documentation") %>
         <% end %>
       </div>

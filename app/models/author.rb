@@ -1,15 +1,6 @@
-# == Schema Information
-#
-# Table name: author
-#
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class Author < ActiveRecord::Base
+
+  attr_accessible :name, :email
 
   is_gravtastic # Enables the Gravtastic plugin for the Author model
 
@@ -23,11 +14,6 @@ class Author < ActiveRecord::Base
   has_many :versions, :class_name => "Version",
                       :foreign_key => :maintainer_id,
                       :order => "LOWER(name) ASC, id DESC"
-
-  has_many :packages, :finder_sql =>
-    'SELECT DISTINCT package.* FROM package ' +
-    'INNER JOIN version ON package.id = version.package_id ' +
-    'WHERE (version.maintainer_id = #{id})', :uniq => true
 
   default_scope :order => "LOWER(name)"
 
@@ -79,4 +65,7 @@ class Author < ActiveRecord::Base
     self.versions.group_by { |v| v.package_id }.values.collect { |a| a.first }
   end
 
+  def packages
+    Version.joins(:package).where(version: {maintainer_id: id}).collect(&:package).uniq
+  end
 end

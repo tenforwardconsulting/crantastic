@@ -4,7 +4,7 @@ class RemoveDoubleTimelineEventsForPackageReleases < ActiveRecord::Migration
     # packages, so we delete these from the db. New records will be handled by
     # the Version observer.
     events = TimelineEvent.all
-    events.enum_with_index.map do |e, i|
+    events.each_with_index.map do |e, i|
       nxt = events[i+1]
       TimelineEvent.delete(e) if e.event_type == "new_version" &&
                                  nxt.event_type == "new_package" &&

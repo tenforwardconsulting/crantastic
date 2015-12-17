@@ -14,3 +14,7 @@ test/*
 solr/*
 bin
 .DS_Store
+config/newrelic.yml
+
+# Ignore application configuration
+/config/application.yml

@@ -1,18 +1,6 @@
-# == Schema Information
-#
-# Table name: package
-#
-#  id                  :integer(4)      not null, primary key
-#  name                :string(255)
-#  description         :text
-#  created_at          :datetime
-#  latest_version_id   :integer(4)
-#  updated_at          :datetime
-#  package_users_count :integer(4)      default(0), not null
-#  score               :float           default(0.0)
-#
-
 class Package < ActiveRecord::Base
+
+  attr_accessible :name
 
   # Specifies the fields that should be indexed with Solr. Note that the tags
   # association is indexed, so if e.g. a package is tagged with
@@ -38,7 +26,7 @@ class Package < ActiveRecord::Base
   has_many :tags, :through => :taggings, :uniq => true do
     # @param [String, Class] type E.g. Priority or TaskView
     def type(type)
-      proxy_owner.tags.all(:conditions => ["type = ?", type.to_s])
+      proxy_association.owner.tags.where("type = ?", type.to_s)
     end
   end
 
@@ -58,12 +46,12 @@ class Package < ActiveRecord::Base
                       :subject           => :self,
                       :secondary_subject => :self # yes 2x package
 
-  named_scope :recent, :order => "#{self.table_name}.created_at DESC",
+  scope :recent, :order => "#{self.table_name}.created_at DESC",
                        :include => :latest_version,
                        :conditions => "#{self.table_name}.created_at IS NOT NULL",
                        :limit => 50
 
-  named_scope :most_popular, :order => "score DESC, package_users_count DESC",
+  scope :most_popular, :order => "score DESC, package_users_count DESC",
                              :include => :latest_version,
                              :limit => 5
 
@@ -108,7 +96,11 @@ class Package < ActiveRecord::Base
   end
 
   def ==(other)
-    self.name.downcase == other.name.downcase
+    if other.kind_of? Package
+      self.name.downcase == other.name.downcase
+    else
+      super
+    end
   end
 
   # If updated_at is nil (which is the case for some older records), return

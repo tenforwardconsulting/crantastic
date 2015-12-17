@@ -1,6 +1,7 @@
 module TagsHelper
 
   def tag_cloud(tags, classes)
+    return unless tags.present?
     # Minimum 1, to prevent division by zero
     max_count = [tags.sort_by(&:weight).last.weight, 1].max.to_f
 

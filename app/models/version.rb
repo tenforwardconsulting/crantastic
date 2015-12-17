@@ -1,33 +1,3 @@
-# == Schema Information
-#
-# Table name: version
-#
-#  id                     :integer(4)      not null, primary key
-#  package_id             :integer(4)
-#  name                   :string(255)
-#  title                  :string(255)
-#  description            :text
-#  license                :text
-#  version                :string(255)
-#  depends                :text
-#  suggests               :text
-#  author                 :text
-#  url                    :string(255)
-#  date                   :date
-#  readme                 :text
-#  changelog              :text
-#  news                   :text
-#  diff                   :text
-#  created_at             :datetime
-#  updated_at             :datetime
-#  maintainer_id          :integer(4)
-#  imports                :text
-#  enhances               :text
-#  priority               :string(255)
-#  publicized_or_packaged :datetime
-#  version_changes        :text
-#
-
 class Version < ActiveRecord::Base
 
   has_many :reviews
@@ -52,7 +22,7 @@ class Version < ActiveRecord::Base
 
   #serialize :version_changes, Hash
 
-  named_scope :recent, :include => :package,
+  scope :recent, :include => :package,
                        :order => "version.created_at DESC",
                        :conditions => "version.created_at IS NOT NULL",
                        :limit => 50
@@ -63,7 +33,9 @@ class Version < ActiveRecord::Base
   validates_length_of :name, :in => 2..255
   validates_length_of :version, :in => 1..25
   validates_length_of :title, :in => 0..255, :allow_nil => true
-  validates_length_of :url, :in => 0..255, :allow_nil => true
+
+  attr_accessible :title, :date, :author, :description, :url, :license, :name, :version, :publicized_or_packaged,
+    :maintainer_id, :package_id, :readme, :news, :depends, :suggests, :imports, :enhances
 
   def <=>(other)
     self.name.downcase <=> other.name.downcase
@@ -76,35 +48,6 @@ class Version < ActiveRecord::Base
   # The CRAN package field is singular, we add a pluralised alias
   def authors
     author
-  end
-
-  # For now this just stores changes from the previous version
-  def serialize_data
-    return unless self.version_changes.nil? && previous
-
-    db = CouchRest.database("http://208.78.99.54:5984/packages")
-    current = db.get(vname)
-    prev = db.get(previous.vname)
-
-    current_functions = current["function_hashes"].keys
-    prev_functions = prev["function_hashes"].keys
-
-    changes = {}
-    changes[:removed] = (prev_functions - current_functions).sort
-    changes[:added]   = (current_functions - prev_functions).sort
-    changes[:changed] = []
-
-    current_functions.each do |f|
-      changes[:changed] << f if current["function_hashes"][f] != prev["function_hashes"][f]
-    end
-    changes[:changed].sort!
-
-    self.version_changes = changes
-
-  rescue RestClient::ResourceNotFound
-    self.version_changes = {}
-  ensure
-    save!
   end
 
   # Prefer publication/package date over the regular date field

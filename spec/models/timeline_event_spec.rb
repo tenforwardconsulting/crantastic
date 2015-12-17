@@ -1,45 +1,55 @@
-# == Schema Information
-#
-# Table name: timeline_event
-#
-#  id                     :integer(4)      not null, primary key
-#  event_type             :string(255)
-#  subject_type           :string(255)
-#  actor_type             :string(255)
-#  secondary_subject_type :string(255)
-#  subject_id             :integer(4)
-#  actor_id               :integer(4)
-#  secondary_subject_id   :integer(4)
-#  created_at             :datetime
-#  updated_at             :datetime
-#  cached_value           :string(255)
-#
+require 'rails_helper'
 
-require File.dirname(__FILE__) + '/../spec_helper'
+RSpec.describe TimelineEvent do
+  let(:timeline_event) { FactoryGirl.build(:timeline_event) }
 
-describe TimelineEvent do
+  #should_validate_presence_of :event_type
 
-  should_validate_presence_of :event_type
+  before(:each) do
+    FactoryGirl.create :package_rating
+  end
 
-  setup do
-    PackageRating.make
+  it 'has a valid factory' do
+    expect(timeline_event).to be_valid
+  end
+
+  describe 'validations' do
+    it 'requires an event_type' do
+      timeline_event.event_type = nil
+      expect(timeline_event).to_not be_valid
+    end
+
+    it 'allows actor to be blank' do
+      timeline_event.actor = nil
+      expect(timeline_event).to be_valid
+    end
+
+    it 'allows secondary_subject to be blank' do
+      timeline_event.secondary_subject = nil
+      expect(timeline_event).to be_valid
+    end
+
   end
 
   it "should cache package ratings" do
-    event = TimelineEvent.create!(:event_type => "new_package_rating",
-                                  :subject => PackageRating.first)
-    event.cached_value.should == PackageRating.first.rating.to_s
+    event = FactoryGirl.create(:package_rating_event)
+    expect(event.cached_value.to_i).to eq(event.subject.rating.to_i)
   end
 
   it "should cache task view versions" do
-    event = TaskView.make.update_version("2009-09-09")
-    event.cached_value.should == TaskView.first.version
+    event = FactoryGirl.create(:task_view).update_version("2009-09-09")
+    expect(event.cached_value).to eq(TaskView.first.version)
   end
 
-  it "should know if it is a package event" do
-    TimelineEvent.new(:event_type => "new_package").should be_package_event
-    TimelineEvent.new(:event_type => "new_version").should be_package_event
-    TimelineEvent.new(:event_type => "new_review").should_not be_package_event
+  {
+    "new_package" => true,
+    "new_version" => true,
+    "new_review" => false,
+  }.each do |event_type, is_package_event|
+    it "knows if #{event_type} is #{is_package_event ? "a" : "not a" } package event" do
+      timeline_event.event_type = event_type
+      expect(timeline_event.package_event?).to eq(is_package_event)
+    end
   end
 
 end

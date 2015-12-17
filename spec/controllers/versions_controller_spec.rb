@@ -1,17 +1,17 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'rails_helper'
 
-describe VersionsController do
+RSpec.describe VersionsController do
 
-  setup do
-    Version.make(:package => Package.make(:name => "rJython"))
+  before(:each) do
+    FactoryGirl.create :version, package: FactoryGirl.create(:package, name: 'rJython')
   end
 
-  integrate_views
+  render_views
 
   it "should have an atom feed" do
     get :feed, :format => "atom"
-    response.should have_tag('title', "New package versions on crantastic")
-    response.should be_success
+    expect(response.body).to include("New package versions on crantastic")
+    expect(response).to be_success
   end
 
 end

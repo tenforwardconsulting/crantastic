@@ -3,6 +3,7 @@ require "digest/md5"
 require "cran"
 require "dcf"
 require "oauth"
+require "open-uri"
 
 module Crantastic
 
@@ -33,15 +34,14 @@ module Crantastic
 
         next if package == "orientlib" && version == "0.10.1" # known bad entry
 
-        cur = crantastic_pkgs.find { |pkg| pkg.name.downcase == package.downcase }
-        if cur
-          if cur.latest_version.nil?
-            Log.log_and_report! "Problem with package #{package}: latest_version missing!"
-          elsif cur.latest_version.version != version
+        crantastic_package = crantastic_pkgs.find { |pkg| pkg.name.downcase == package.downcase }
+        if crantastic_package
+          if !crantastic_package.versions.find_by_version(version).present?
             Log.log!("Updating package: #{package} (#{version})")
             begin
-              add_version_to_db(CRAN::CranPackage.new(package, version), cur.id)
+              add_version_to_db(CRAN::CranPackage.new(package, version), crantastic_package.id)
             rescue Exception => e
+              Log.log_and_report! "Problem with package #{package}: could not store #{version}", e
               # we can ignore the fact that the version upgrade failed, it will
               # be retried the next time the updater runs.
             end
@@ -59,6 +59,7 @@ module Crantastic
               pkg.delete
             end
           rescue Exception => e
+            Log.log_and_report! "Problem with package #{package}: could not store #{version}", e
             pkg.delete
           end
         end
@@ -78,9 +79,11 @@ module Crantastic
       `curl -s "http://cran.r-project.org/src/contrib/#{pkg.name}_#{pkg.version}.tar.gz" -o tmp/#{filename}`
       `tar -C tmp -zxvf tmp/#{filename}; rm tmp/#{filename}`
 
-      pkgdir = File.join(RAILS_ROOT, "/tmp/#{pkg.name}/")
+      pkgdir = File.join(Rails.root, "/tmp/#{pkg.name}/")
 
-      description = Dcf.parse(File.read(pkgdir + "DESCRIPTION"))
+      raw_description = File.read(pkgdir + "DESCRIPTION")
+      raw_description.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+      description = Dcf.parse(raw_description)
       throw Exception.new("Couldn't parse DESCRIPTION for #{pkg.name}. " +
                           "Look at http://cran.r-project.org/web/packages/#{pkg.name}/DESCRIPTION " +
                           "for clues.") if description.nil?
@@ -133,10 +136,10 @@ module Crantastic
       FileUtils.rm_rf(pkgdir)
       return version
     rescue OpenURI::HTTPError, SocketError, URI::InvalidURIError, Timeout::Error
-      Log.log_and_report!("Problem downloading #{pkg}, skipping to next pkg", data)
+      Log.log_and_report! "Problem downloading #{pkg}, skipping to next pkg"
       raise
     rescue Exception => e
-      Log.log_and_report!("Error adding #{pkg}: #{e}", data)
+      Log.log_and_report!("Error adding #{pkg}: #{e}", e)
       raise
     end
 

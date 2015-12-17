@@ -1,5 +1,8 @@
 %li
   = link_to result.to_s, result, :style => "padding-right: 5px;"
   - if result.kind_of?(Package)
-    = star_rating_for(result)
-    %p= raw(highlight(truncate(result.description, :length => 180), search_term))
+    = raw star_rating_for(result)
+    - if result.description
+      %p= raw(highlight(truncate(result.description, :length => 180), search_term))
+    - else
+      %p No Description

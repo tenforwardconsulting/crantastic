@@ -1,35 +1,27 @@
-# == Schema Information
-#
-# Table name: log
-#
-#  id         :integer(4)      not null, primary key
-#  message    :string(255)     not null
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 # Simple general purpose model for logging messages
 class Log < ActiveRecord::Base
 
+  attr_accessible :message
+
   validates_presence_of :message
 
-  after_create lambda { self.trim_entry_count }
+  after_create lambda { Log.trim_entry_count }
 
   def self.max_entries; 500; end # Keep a maximum number of log entries in the db
 
-  def self.log!(msg, quiet=false)
+  def self.log!(msg, quiet = false)
     puts msg unless quiet
     Log.create!(:message => msg[0,255])
   end
 
-  def self.log_and_report!(msg, request={}, quiet=false)
+  def self.log_and_report!(msg, exception = nil)
     msg = msg.respond_to?(:to_s) ? msg.to_s : "Unknown error"
-    self.log!(msg, quiet)
-    HoptoadNotifier.notify(
-                           :error_class => "Log error",
-                           :error_message => msg,
-                           :parameters => request
-                           )
+    self.log!(msg)
+    if exception
+      Rollbar.report_exception(exception)
+    else
+      Rollbar.report_message(msg)
+    end
   end
 
   def self.trim_entry_count

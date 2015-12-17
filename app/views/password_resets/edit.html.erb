@@ -1,7 +1,7 @@
 <h1>Change My Password</h1>
 
-<% form_for @user, :url => password_reset_path, :html => { :method => :put } do |f| %>
-  <%= raw f.error_messages %>
+<%= form_for @user, :url => password_reset_path, :html => { :method => :put } do |f| %>
+  <%= render partial: 'shared/errors', locals: { model: @user, model_name: 'user' } %>
   <%= f.label :password %><br />
   <%= f.password_field :password %><br />
   <br />

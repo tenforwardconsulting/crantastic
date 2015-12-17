@@ -32,13 +32,13 @@ require File.dirname(__FILE__) + '/deprecation'
 require File.dirname(__FILE__) + '/search_results'
 require File.dirname(__FILE__) + '/lazy_document'
 module ActsAsSolr
-  
-  class Post    
+
+  class Post
     def self.execute(request)
       begin
-        if File.exists?(RAILS_ROOT+'/config/solr.yml')
-          config = YAML::load_file(RAILS_ROOT+'/config/solr.yml')
-          url = config[RAILS_ENV]['url']
+        if File.exists?(Rails.root.to_s+'/config/solr.yml')
+          config = YAML::load_file(Rails.root.to_s+'/config/solr.yml')
+          url = config[Rails.env]['url']
           # for backwards compatibility
           url ||= "http://#{config[RAILS_ENV]['host']}:#{config[RAILS_ENV]['port']}/#{config[RAILS_ENV]['servlet_path']}"
         else
@@ -46,13 +46,13 @@ module ActsAsSolr
         end
         connection = Solr::Connection.new(url)
         return connection.send(request)
-      rescue 
+      rescue
         raise "Couldn't connect to the Solr server at #{url}. #{$!}"
         false
       end
     end
   end
-  
+
 end
 
 # reopen ActiveRecord and include the acts_as_solr method

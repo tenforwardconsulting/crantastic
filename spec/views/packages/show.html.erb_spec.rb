@@ -1,40 +1,46 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'rails_helper'
 
-describe "/packages" do
+RSpec.describe "/packages/show.html.erb" do
 
+  let(:version) { FactoryGirl.build_stubbed :version }
+  let(:pkg) { version.package }
   setup do
     activate_authlogic
-    mypkg = Package.make(:name => "mypkg")
-    Package.make(:name => "optmatch")
-    imports = "graphics, stats, lattice, grid, SparseM, xtable"
-    imports.split(", ").each { |pkg| Package.make(:name => pkg) }
-    Version.make(:package => mypkg,
-                 :imports  => imports,
-                 :suggests => "optmatch, xtable",
-                 :enhances => "xtable")
   end
 
   before(:each) do
-    @pkg = Package.find_by_param("mypkg")
-    @tagging = Tagging.new
-    @tagging.package = @pkg
-    assigns[:package] = @pkg
-    assigns[:version] = @pkg.latest
-    assigns[:tagging] = @tagging
-    render 'packages/show'
+    allow(pkg).to receive(:latest) { version }
+    allow(view).to receive(:current_user) { FactoryGirl.build :user }
+    allow(view).to receive(:logged_in?) { true }
+    tagging = Tagging.new
+    tagging.package = pkg
+    assign :package, pkg
+    assign :version, version
+    assign :tagging, tagging
   end
 
   it "should display the correct h1 title for a package page" do
-    response.should have_tag('h1', "#{@pkg.name} (#{@pkg.latest.version})")
+    render
+    package_title = "#{pkg.name} (#{version.version})"
+    expect(rendered).to have_tag('h1', "#{pkg.name} (#{pkg.latest.version})")
   end
 
   it "should display ratings" do
-    response.should have_tag('h2', 'Ratings')
-    response.should have_tag('span', /\(0 votes\)/)
+    render
+    expect(rendered).to have_tag('h2', 'Ratings')
+    expect(rendered).to have_tag('span', /\(0 votes\)/)
   end
 
-  it "should show used packages" do
-    response.should have_tag("p") do
+  xit "should show used packages" do
+    imports = %w(graphics stats lattice grid SparseM xtable)
+    imports.each { |pkg| FactoryGirl.create(:package, :name => pkg) }
+    version = FactoryGirl.create(:version,
+                 :imports  => imports.join(", "),
+                 :suggests => "optmatch, xtable",
+                 :enhances => "xtable")
+    assign :version, version
+    render
+    expect(rendered).to have_tag("p") do
       with_tag("strong", "Uses")
       with_tag("a", "lattice")
       with_tag("a", "SparseM")

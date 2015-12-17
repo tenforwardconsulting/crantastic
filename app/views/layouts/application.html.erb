@@ -10,13 +10,13 @@
     <%= stylesheet_link_tag 'jquery.rating', :media => "screen, projection" %>
     <%= stylesheet_link_tag 'facebox', :media => "screen, projection" %>
     <%= stylesheet_link_tag 'print', :media => "print" %>
-    <link href="/javascripts/prettify/prettify.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="/javascripts/prettify/prettify.js"></script>
+    <%= stylesheet_link_tag 'prettify', :media => "screen" %>
     <!--[lt IE 8]>
     <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
     <![endif]-->
 
     <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" -%>
+    <%= javascript_include_tag 'prettify/prettify' %>
     <%= javascript_include_tag 'jquery.livequery', 'jquery.MetaData', 'jquery.delayedObserver',
         'jquery.rating.pack', 'jquery.tag', 'facebox', 'application'  -%>
     <%= javascript_tag "window.AUTH_TOKEN = '#{form_authenticity_token}';" %>
@@ -33,6 +33,7 @@
     <meta name="verify-v1" content="YtXicWGGldm5yUfU718DJMAreQ9gf2gtsSCe5VysH10=" />
   </head>
   <body>
+    <%= query_diet_widget if Rails.env.development? %>
 
     <div id="container">
       <div id="main">
@@ -60,7 +61,7 @@
         </div>
 
         <div id="search-box" class="box">
-          <% form_tag search_path, :method => 'GET' do -%>
+          <%= form_tag search_path, :method => 'GET' do -%>
           <div style="margin: 0 0 0 0.1em">
             <table style="margin: 0; padding: 0">
               <tr style="margin: 0; padding: 0">
@@ -123,7 +124,7 @@
     </div>
   </div>
 
-  <% unless RAILS_ENV == "development" %>
+  <% unless Rails.env.development? %>
     <%= render :partial => "layouts/uservoice" -%>
     <%= render :partial => "layouts/google_analytics" -%>
   <% end %>

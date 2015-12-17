@@ -1,32 +1,3 @@
-# == Schema Information
-#
-# Table name: user
-#
-#  id                  :integer(4)      not null, primary key
-#  login               :string(255)
-#  email               :string(255)
-#  crypted_password    :string(255)
-#  password_salt       :string(255)
-#  created_at          :datetime
-#  updated_at          :datetime
-#  activated_at        :datetime
-#  remember            :boolean(1)      default(FALSE), not null
-#  homepage            :string(255)
-#  profile             :text
-#  profile_html        :text
-#  single_access_token :string(255)     default(""), not null
-#  role_name           :string(40)
-#  perishable_token    :string(40)
-#  persistence_token   :string(128)     default(""), not null
-#  login_count         :integer(4)      default(0), not null
-#  last_request_at     :datetime
-#  last_login_at       :datetime
-#  current_login_at    :datetime
-#  last_login_ip       :string(255)
-#  current_login_ip    :string(255)
-#  tos                 :boolean(1)
-#
-
 require "rpx_now/user_integration"
 
 class User < ActiveRecord::Base
@@ -40,7 +11,7 @@ class User < ActiveRecord::Base
     c.perishable_token_valid_for = 1.day
 
     c.validates_format_of_login_field_options = {
-      :with => /^\w[\w\.\-_@]+$/,
+      :with => /^\w[\w\.\-@]+$/,
       :message => "only use letters, numbers, and .-_@ please"
     }
     c.validates_format_of_email_field_options = {
@@ -111,8 +82,12 @@ class User < ActiveRecord::Base
       r.rating = rating
       r.save
     else
-      PackageRating.create!(:package_id => package, :user_id => self.id,
-                            :rating => rating, :aspect => aspect)
+      PackageRating.new do |pr|
+        pr.package_id = package
+        pr.user_id = self.id
+        pr.rating = rating
+        pr.aspect = aspect
+      end.save!
     end
   end
 
@@ -122,12 +97,10 @@ class User < ActiveRecord::Base
   # @param [String] aspect "general" or "documentation"
   # @return [PackageRating] The PackageRating object
   def rating_for(package_id, aspect="overall")
-    PackageRating.find(:first,
-                       :conditions => {
-                         :package_id => package_id,
-                         :user_id => self.id,
-                         :aspect => aspect
-                       })
+    PackageRating.where(:package_id => package_id,
+                        :user_id => self.id,
+                        :aspect => aspect
+                       ).first
   end
 
   # Toggle this users usage status for a given package. Creates a new vote or
@@ -155,21 +128,26 @@ class User < ActiveRecord::Base
   def author_of?(pkg)
     # This could be optimized, but I think this will suffice for a while
     # since most of the time a user will only be connected with one author.
-    self.authors.collect { |a| a.packages }.flatten.uniq.include?(pkg)
+    packages = self.authors.collect { |a| a.packages }
+    if packages
+      packages.flatten.uniq.include?(pkg)
+    else
+      false
+    end
   end
 
   def deliver_activation_instructions!
     reset_perishable_token!
-    UserMailer.deliver_activation_instructions(self)
+    UserMailer.activation_instructions(self).deliver
   end
 
   def deliver_activation_confirmation!
-    UserMailer.deliver_activation_confirmation(self)
+    UserMailer.activation_confirmation(self).deliver
   end
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    UserMailer.deliver_password_reset_instructions(self)
+    UserMailer.password_reset_instructions(self).deliver
   end
 
   def admin?

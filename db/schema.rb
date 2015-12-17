@@ -1,10 +1,12 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
@@ -32,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
     t.integer "version_id",          :null => false
     t.integer "enhanced_package_id", :null => false
   end
+
+  add_index "enhanced_package_version", ["version_id", "enhanced_package_id"], :name => "index_enhanced_package_version_on_version_id_and_enhanced_packa", :unique => true
 
   create_table "log", :force => true do |t|
     t.string   "message",    :null => false
@@ -82,6 +86,8 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
     t.integer "required_package_id", :null => false
   end
 
+  add_index "required_package_version", ["version_id", "required_package_id"], :name => "index_required_package_version_on_version_id_and_required_packa", :unique => true
+
   create_table "review", :force => true do |t|
     t.integer  "package_id"
     t.integer  "user_id"
@@ -108,6 +114,10 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
 
   add_index "review_comment", ["review_id"], :name => "index_review_comment_on_review_id"
   add_index "review_comment", ["user_id"], :name => "index_review_comment_on_user_id"
+
+  create_table "schema_info", :id => false, :force => true do |t|
+    t.integer "version"
+  end
 
   create_table "sitemap_setting", :force => true do |t|
     t.string   "name"
@@ -146,13 +156,15 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
     t.integer "suggested_package_id", :null => false
   end
 
+  add_index "suggested_package_version", ["version_id", "suggested_package_id"], :name => "index_suggested_package_version_on_version_id_and_suggested_pac", :unique => true
+
   create_table "tag", :force => true do |t|
     t.string   "name",                      :null => false
     t.string   "full_name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type",        :limit => 25
+    t.string   "type"
     t.string   "version",     :limit => 10
   end
 
@@ -166,7 +178,7 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
     t.integer  "tag_id"
   end
 
-  add_index "tagging", ["user_id", "package_id", "tag_id"], :name => "index_tagging_on_user_id_and_package_id_and_tag_id"
+  add_index "tagging", ["package_id", "tag_id", "user_id"], :name => "index_tagging_on_user_id_and_package_id_and_tag_id"
 
   create_table "timeline_event", :force => true do |t|
     t.string   "event_type"
@@ -205,10 +217,6 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
     t.string   "current_login_ip"
     t.boolean  "tos"
   end
-
-  add_index "user", ["last_request_at"], :name => "index_user_on_last_request_at"
-  add_index "user", ["login"], :name => "index_user_on_login"
-  add_index "user", ["persistence_token"], :name => "index_user_on_persistence_token"
 
   create_table "version", :force => true do |t|
     t.integer  "package_id"

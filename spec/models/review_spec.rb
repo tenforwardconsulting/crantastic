@@ -1,34 +1,23 @@
-# == Schema Information
-#
-# Table name: review
-#
-#  id            :integer(4)      not null, primary key
-#  package_id    :integer(4)
-#  user_id       :integer(4)
-#  review        :text
-#  title         :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  version_id    :integer(4)
-#  cached_rating :integer(4)
-#
+require 'rails_helper'
 
-require File.dirname(__FILE__) + '/../spec_helper'
+RSpec.describe Review do
 
-describe Review do
+  let(:review) { FactoryGirl.build :review }
+  #should_validate_length_of :review, :minimum => 3
+  #should_validate_length_of :title, :minimum => 3
 
-  should_validate_length_of :review, :minimum => 3
-  should_validate_length_of :title, :minimum => 3
-
-  setup do
-    Version.make
-    User.make
+  before(:each) do
+    FactoryGirl.create :version
+    FactoryGirl.create :user
+  end
+  it 'has a valid factory' do
+    expect(review).to be_valid
   end
 
   it "should strip title and review before validation" do
     r = Review.new(:title => " title \r\n")
     r.valid?
-    r.title.should == "title"
+    expect(r.title).to eq("title")
   end
 
   it "should store package version" do
@@ -36,7 +25,7 @@ describe Review do
     review = Review.create!(:package => pkg, :user => User.first,
                             :title => "Title", :review => "Lorem")
     review.reload
-    review.version.should == pkg.latest
+    expect(review.version).to eq(pkg.latest)
   end
 
 end
