@@ -29,5 +29,4 @@ class UserMailer < ActionMailer::Base
       subject: "Password Reset Instructions"
     )
   end
-
 end
