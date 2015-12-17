@@ -20,7 +20,7 @@ RSpec.feature "Authentication" do
   it "should not login the user before activation" do
     FactoryGirl.create :user, login: 'john'
     login_with_valid_credentials
-    expect(page).to have_content "Invalid user name or password."
+    expect(page).to have_content "Your account is not active"
   end
 
   it "should be possible for the user to activate his account" do
@@ -35,7 +35,7 @@ RSpec.feature "Authentication" do
     fill_in "login", :with => "john"
     fill_in "password", :with => "invalid"
     click_button "login"
-    expect(page).to have_content "Invalid user name or password. Maybe you meant to sign up instead?"
+    expect(page).to have_content "Login is not valid"
   end
 
   describe "activated user" do
