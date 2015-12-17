@@ -34,4 +34,7 @@ Crantastic::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.action_mailer.asset_host = "http://lvh.me:3000"
+  config.action_mailer.default_url_options = { :host => "lvh.me:3000" }
 end
