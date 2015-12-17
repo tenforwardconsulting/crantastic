@@ -5,8 +5,7 @@ set :application, 'crantastic'
 set :repo_url, 'git@github.com:tenforwardconsulting/crantastic.git'
 
 # Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-set :branch, 'rails-3'
+set :branch, ENV['BRANCH'] || 'master'
 # Default deploy_to directory is /var/www/my_app
 set :deploy_to, '/u/apps/crantastic'
 
