@@ -54,13 +54,14 @@ class ReviewsController < ApplicationController
   end
 
   private
+
   def parent_object
     return nil if params[:package_id].blank?
+
     if params[:package_id].to_i == 0
       Package.find_by_param(params[:package_id])
     else
       Package.find(params[:package_id])
     end
   end
-
 end

@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
         user = User.new(:email => data[:email], :login => data[:username])
         if User.find_by_login(data[:username]) # Username already taken
           # Maybe not the most elegant way to do it, but it works for now
-          user.login = ActiveSupport::SecureRandom.hex(5)
+          user.login = SecureRandom.hex(5)
           flash[:notice] = "Your preferred username was not available. You have been " +
             "assigned a random username instead -- you can change it to " +
             "something else by editing your details."
