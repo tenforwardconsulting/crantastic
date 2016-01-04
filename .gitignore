@@ -21,3 +21,5 @@ config/newrelic.yml
 
 .rspec
 spec/examples.txt
+
+db/backups
