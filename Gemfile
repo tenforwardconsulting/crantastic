@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.22'
+gem 'rails', '~> 3.2'
 
 gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
