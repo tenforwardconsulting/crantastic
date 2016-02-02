@@ -49,6 +49,15 @@ development machine is simple, though:
 Then you can run `rake solr:reindex` from the folder where you have the
 crantastic source code.
 
+#### Solr on Production
+
+If you need to restart solr on production, ssh in as crantastic to crantastic.org and do this:
+
+    cd ~/acts_as_solr/solr
+    nohup java -jar start.jar &
+
+After that, you can exit the ssh session.
+
 ### R package
 
 There is a R package for crantastic that lives in its own branch in the Git
