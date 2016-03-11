@@ -27,6 +27,7 @@ gem 'sass-rails'
 gem 'timeline_fu', '~> 0.3.0'
 gem 'treetop-dcf', '~> 0.2.1', :require => false
 gem 'will_paginate'
+gem 'whenever'
 gem 'yajl-ruby', '~> 0.7.8', :require => 'yajl'
 
 group :development, :test do
