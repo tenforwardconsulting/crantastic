@@ -146,12 +146,10 @@ module Crantastic
     def read_from_files(pkgdir, files)
       data = {}
       files.each do |f|
-        if File.exists?(pkgdir + f)
+        if File.exists?(pkgdir + f) && !File.directory?(pkgdir + f)
           data[f.downcase.to_sym] = File.read(pkgdir + f)
-        else
-          if File.exists?(pkgdir + "inst/" + f)
-            data[f.downcase.to_sym] = File.read(pkgdir + "inst/" + f)
-          end
+        elsif File.exists?(pkgdir + "inst/" + f) && !File.directory?(pkgdir + "inst/" + f)
+          data[f.downcase.to_sym] = File.read(pkgdir + "inst/" + f)
         end
       end
       data
