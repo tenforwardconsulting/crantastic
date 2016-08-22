@@ -44,6 +44,8 @@ GEM
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     bitly (0.5.5)
       crack (>= 0.1.4)
       httparty (>= 0.5.2)
@@ -89,6 +91,7 @@ GEM
       compass (>= 0.12.2)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.1)
@@ -253,7 +256,9 @@ PLATFORMS
 DEPENDENCIES
   authlogic
   better_errors (~> 1.1.0)
+  binding_of_caller
   bitly (~> 0.5.3)
+  builder
   cancan (~> 1.4.0)
   capistrano-rails
   capistrano-rvm
