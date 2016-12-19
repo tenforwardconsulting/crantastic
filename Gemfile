@@ -4,6 +4,7 @@ gem 'rails', '~> 3.2'
 
 gem 'authlogic'
 gem 'bitly', '~> 0.5.3'
+gem 'builder'
 gem 'cancan', '~> 1.4.0'
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
@@ -27,6 +28,7 @@ gem 'sass-rails'
 gem 'timeline_fu', '~> 0.3.0'
 gem 'treetop-dcf', '~> 0.2.1', :require => false
 gem 'will_paginate'
+gem 'whenever'
 gem 'yajl-ruby', '~> 0.7.8', :require => 'yajl'
 
 group :development, :test do
@@ -41,6 +43,7 @@ end
 
 group :development do
   gem 'better_errors', '~> 1.1.0'
+  gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'quiet_assets'
   gem 'query_diet'

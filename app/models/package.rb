@@ -1,3 +1,4 @@
+require 'builder'
 class Package < ActiveRecord::Base
 
   attr_accessible :name
@@ -143,8 +144,8 @@ class Package < ActiveRecord::Base
   end
 
   def to_xml(options = {})
-    xml = Builder::XmlMarkup.new
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml = ::Builder::XmlMarkup.new
+    xml = options[:builder] ||= ::Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
     xml.package do
       xml.id self.id, {:type => :integer}
