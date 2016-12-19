@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110315153114) do
+ActiveRecord::Schema.define(:version => 20161219220645) do
 
   create_table "author", :force => true do |t|
     t.string   "name"
@@ -156,7 +156,9 @@ ActiveRecord::Schema.define(:version => 20110315153114) do
     t.integer "suggested_package_id", :null => false
   end
 
+  add_index "suggested_package_version", ["suggested_package_id"], :name => "index_suggested_package_version_on_suggested_package_id"
   add_index "suggested_package_version", ["version_id", "suggested_package_id"], :name => "index_suggested_package_version_on_version_id_and_suggested_pac", :unique => true
+  add_index "suggested_package_version", ["version_id"], :name => "index_suggested_package_version_on_version_id"
 
   create_table "tag", :force => true do |t|
     t.string   "name",                      :null => false
