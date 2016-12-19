@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161219220645) do
+ActiveRecord::Schema.define(:version => 20161219231455) do
 
   create_table "author", :force => true do |t|
     t.string   "name"
@@ -35,7 +35,9 @@ ActiveRecord::Schema.define(:version => 20161219220645) do
     t.integer "enhanced_package_id", :null => false
   end
 
+  add_index "enhanced_package_version", ["enhanced_package_id"], :name => "index_enhanced_package_version_on_enhanced_package_id"
   add_index "enhanced_package_version", ["version_id", "enhanced_package_id"], :name => "index_enhanced_package_version_on_version_id_and_enhanced_packa", :unique => true
+  add_index "enhanced_package_version", ["version_id"], :name => "index_enhanced_package_version_on_version_id"
 
   create_table "log", :force => true do |t|
     t.string   "message",    :null => false
@@ -86,7 +88,9 @@ ActiveRecord::Schema.define(:version => 20161219220645) do
     t.integer "required_package_id", :null => false
   end
 
+  add_index "required_package_version", ["required_package_id"], :name => "index_required_package_version_on_required_package_id"
   add_index "required_package_version", ["version_id", "required_package_id"], :name => "index_required_package_version_on_version_id_and_required_packa", :unique => true
+  add_index "required_package_version", ["version_id"], :name => "index_required_package_version_on_version_id"
 
   create_table "review", :force => true do |t|
     t.integer  "package_id"
@@ -157,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20161219220645) do
   end
 
   add_index "suggested_package_version", ["suggested_package_id"], :name => "index_suggested_package_version_on_suggested_package_id"
+  add_index "suggested_package_version", ["suggested_package_id"], :name => "suggested_package_id"
   add_index "suggested_package_version", ["version_id", "suggested_package_id"], :name => "index_suggested_package_version_on_version_id_and_suggested_pac", :unique => true
   add_index "suggested_package_version", ["version_id"], :name => "index_suggested_package_version_on_version_id"
 
