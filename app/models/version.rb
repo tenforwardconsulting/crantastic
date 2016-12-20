@@ -136,9 +136,12 @@ class Version < ActiveRecord::Base
   end
 
   def reverse_versions(key)
-    Version.find(:all, :include => :package, :conditions =>
-                 ["id IN (SELECT version_id FROM #{key}_version WHERE #{key}_id = ?)",
-                  self.package.id])
+    Version.joins("INNER JOIN #{key}_version on #{key}_version.version_id = version.id")
+           .where("#{key}_version.#{key}_id = ?", self.package.id)
+
+    # Version.find(:all, :include => :package, :conditions =>
+    #              ["id IN (SELECT version_id FROM #{key}_version WHERE #{key}_id = ?)",
+    #               self.package.id])
   end
 
 end
