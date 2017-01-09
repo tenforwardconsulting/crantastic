@@ -3,7 +3,7 @@
 *.swp
 *~
 *.pid
-log
+*log*
 db/*.sqlite3
 tmp
 _site
