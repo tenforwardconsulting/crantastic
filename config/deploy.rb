@@ -9,6 +9,10 @@ set :branch, ENV['BRANCH'] || 'master'
 # Default deploy_to directory is /var/www/my_app
 set :deploy_to, '/u/apps/crantastic'
 
+set :rollbar_token, '78ff2b3d7700486aa7eb8cbc6c356135'
+set :rollbar_env, Proc.new { fetch :stage }
+set :rollbar_role, Proc.new { :app }
+
 # Default value for :scm is :git
 # set :scm, :git
 
