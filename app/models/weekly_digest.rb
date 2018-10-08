@@ -17,6 +17,8 @@ class WeeklyDigest < ActiveRecord::Base
 
   default_scope :order => "id DESC" # Newest digests first
 
+  after_create :send_email
+
   # Just to keep the API consistent
   def self.find_by_param(param)
     self.find_by_param!(param)
@@ -77,4 +79,11 @@ class WeeklyDigest < ActiveRecord::Base
     created_at.to_date.cweek
   end
 
+  private
+
+  def send_email
+    unless packages.empty? && versions.empty?
+      DigestMailer.weekly_digest(self).deliver
+    end
+  end
 end
